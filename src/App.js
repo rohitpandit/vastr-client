@@ -2,7 +2,11 @@ import './bootstrap.min.css';
 import './App.css';
 
 function App() {
-	return <div>Welcome to Vastr</div>;
+	return (
+		<div>
+			<h1>Welcome to Vastr</h1>
+		</div>
+	);
 }
 
 export default App;
