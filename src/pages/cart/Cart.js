@@ -1,7 +1,13 @@
-import React from 'react';
+import React, { Fragment } from 'react';
+import Navbar from '../../components/navbar/Navbar';
 
 const Cart = () => {
-	return <div>Cart page</div>;
+	return (
+		<Fragment>
+			<Navbar />
+			<div>Cart page</div>
+		</Fragment>
+	);
 };
 
 export default Cart;
