@@ -14,8 +14,9 @@ export const login = (userInfo) => async (dispatch) => {
 
 		//dummy token
 		const token = 13;
-
-		dispatch({ type: LOGIN_SUCCESS, payload: token });
+		setTimeout(() => {
+			dispatch({ type: LOGIN_SUCCESS, payload: token });
+		}, 2000);
 	} catch (error) {
 		dispatch({ type: LOGIN_FAIL, error: error.response.data.message });
 	}
@@ -28,7 +29,9 @@ export const signup = (userInfo) => async (dispatch) => {
 		//dummy token
 		const token = 13;
 
-		dispatch({ type: SIGNUP_SUCCESS, payload: token });
+		setTimeout(() => {
+			dispatch({ type: SIGNUP_SUCCESS, payload: token });
+		}, 2000);
 	} catch (error) {
 		dispatch({ type: SIGNUP_FAIL, error: error.response.data.message });
 	}

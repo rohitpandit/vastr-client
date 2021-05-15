@@ -1,15 +1,28 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Navbar from '../../components/navbar/Navbar';
 import classes from './Signup.module.css';
+import Loading from '../../components/loading/Loading';
+import { signup } from '../../actions/authAction';
 
-const Signup = () => {
+const Signup = (props) => {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const [confirmPassword, setConfirmPassword] = useState('');
 	const [showPassword, setShowPassword] = useState(false);
+
+	useEffect(() => {
+		if (props.authError) {
+			toast.error(props.authError);
+		}
+
+		if (props.authSuccess) {
+			props.history.push('/');
+		}
+	}, [props.authError, props.authSuccess]);
 
 	const onSubmit = (e) => {
 		e.preventDefault();
@@ -29,7 +42,7 @@ const Signup = () => {
 			return;
 		}
 
-		return;
+		props.signup({ email, password });
 	};
 
 	const togglePassword = () => {
@@ -40,6 +53,7 @@ const Signup = () => {
 		<div className={classes.page}>
 			<Navbar />
 			<ToastContainer />
+			{props.authLoading && <Loading />}
 			<div className='p-5'>
 				<div className='container bg-white p-3 w-50 shadow '>
 					<div className='d-flex justify-content-center'>
@@ -83,7 +97,7 @@ const Signup = () => {
 							className='form-control my-3'
 							placeholder='confirm Password'
 							value={confirmPassword}
-							onChange={(e) => setPassword(e.target.value)}
+							onChange={(e) => setConfirmPassword(e.target.value)}
 							required
 							minLength='6'
 						/>
@@ -100,4 +114,15 @@ const Signup = () => {
 	);
 };
 
-export default Signup;
+const mapStateToProps = (state) => ({
+	authLoading: state.auth.loading,
+	authSuccess: state.auth.success,
+	authError: state.auth.error,
+	authtoken: state.auth.token,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+	signup: (userInfo) => dispatch(signup(userInfo)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Signup);

@@ -1,14 +1,27 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Navbar from '../../components/navbar/Navbar';
 import classes from './Login.module.css';
+import { login } from '../../actions/authAction';
+import Loading from '../../components/loading/Loading';
 
-const Login = () => {
+const Login = (props) => {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const [showPassword, setShowPassword] = useState(false);
+
+	useEffect(() => {
+		if (props.authError) {
+			toast.error(props.authError);
+		}
+
+		if (props.authSuccess) {
+			props.history.push('/');
+		}
+	}, [props.authError, props.authSuccess]);
 
 	const onSubmit = (e) => {
 		e.preventDefault();
@@ -21,7 +34,7 @@ const Login = () => {
 			toast.error('Enter email and password');
 		}
 
-		return;
+		props.login({ email, password });
 	};
 
 	const togglePassword = () => {
@@ -32,6 +45,7 @@ const Login = () => {
 		<div className={classes.page}>
 			<Navbar />
 			<ToastContainer />
+			{props.authLoading && <Loading />}
 			<div className='p-5'>
 				<div className='container bg-white p-3 w-50 shadow '>
 					<div className='d-flex justify-content-center'>
@@ -84,4 +98,15 @@ const Login = () => {
 	);
 };
 
-export default Login;
+const mapStateToProps = (state) => ({
+	authLoading: state.auth.loading,
+	authSuccess: state.auth.success,
+	authError: state.auth.error,
+	authtoken: state.auth.token,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+	login: (userInfo) => dispatch(login(userInfo)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
