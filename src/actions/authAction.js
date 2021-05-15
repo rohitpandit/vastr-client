@@ -7,7 +7,9 @@ import {
 	SIGNUP_REQUEST,
 	SIGNUP_SUCCESS,
 	RESET_AUTH,
+	LOGOUT,
 } from '../constants/authConstants';
+import { removeState, saveState } from '../localstore';
 
 export const login = (userInfo) => async (dispatch) => {
 	try {
@@ -19,6 +21,7 @@ export const login = (userInfo) => async (dispatch) => {
 		);
 
 		dispatch({ type: LOGIN_SUCCESS, payload: result.data.token });
+		saveState(result.data.token);
 
 		//removing success value
 		setTimeout(() => {
@@ -44,6 +47,7 @@ export const signup = (userInfo) => async (dispatch) => {
 		);
 
 		dispatch({ type: SIGNUP_SUCCESS, payload: result.data.token });
+		saveState(result.data.token);
 
 		//removing success value
 		setTimeout(() => {
@@ -57,4 +61,9 @@ export const signup = (userInfo) => async (dispatch) => {
 			dispatch({ type: RESET_AUTH });
 		}, 2000);
 	}
+};
+
+export const logout = () => async (dispatch) => {
+	dispatch({ type: LOGOUT });
+	removeState();
 };

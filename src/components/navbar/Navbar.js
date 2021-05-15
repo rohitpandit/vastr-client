@@ -1,9 +1,23 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useHistory } from 'react-router-dom';
+import { connect } from 'react-redux';
 import vastr from './vastrLogo.png';
 import classes from './Navbar.module.css';
+import { logout } from '../../actions/authAction';
 
-const Navbar = () => {
+const Navbar = (props) => {
+	const history = useHistory();
+
+	const loginLogout = (e) => {
+		e.preventDefault();
+
+		if (props.token) {
+			props.logout();
+		} else {
+			history.push('/login');
+		}
+	};
+
 	return (
 		<div className='shadow '>
 			<nav className={`navbar navbar-expand-lg navbar-light bg-light p-1`}>
@@ -29,9 +43,9 @@ const Navbar = () => {
 								</NavLink>
 							</li>
 						</ul>
-						<form className='d-flex'>
+						<form className='d-flex' onClick={loginLogout}>
 							<button className='btn btn-outline-success' type='submit'>
-								login/logout
+								{props.token ? 'Logout' : 'Login'}
 							</button>
 						</form>
 					</div>
@@ -41,4 +55,12 @@ const Navbar = () => {
 	);
 };
 
-export default Navbar;
+const mapStateToProps = (state) => ({
+	token: state.auth.token,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+	logout: () => dispatch(logout()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Navbar);
