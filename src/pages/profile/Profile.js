@@ -1,12 +1,13 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import Navbar from '../../components/navbar/Navbar';
+import classes from './Profile.module.css';
 
 const Profile = () => {
 	return (
-		<Fragment>
+		<div className={classes.page}>
 			<Navbar />
 			<div>Profile page</div>
-		</Fragment>
+		</div>
 	);
 };
 

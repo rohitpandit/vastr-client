@@ -1,12 +1,13 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import Navbar from '../../components/navbar/Navbar';
+import classes from './Product.module.css';
 
 const Product = () => {
 	return (
-		<Fragment>
+		<div className={classes.page}>
 			<Navbar />
 			<div>Login page</div>
-		</Fragment>
+		</div>
 	);
 };
 
