@@ -2,6 +2,7 @@ import {
 	LOGIN_FAIL,
 	LOGIN_REQUEST,
 	LOGIN_SUCCESS,
+	RESET_AUTH,
 	SIGNUP_FAIL,
 	SIGNUP_REQUEST,
 	SIGNUP_SUCCESS,
@@ -40,6 +41,12 @@ const authReducer = (state = initialState, action) => {
 				error: action.error,
 				success: false,
 				loading: false,
+			};
+		case RESET_AUTH:
+			return {
+				...state,
+				error: null,
+				success: false,
 			};
 		default:
 			return state;
