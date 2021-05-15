@@ -1,3 +1,39 @@
 .page {
 	min-height: 100vh;
 }
+
+.head {
+	height: 70vh;
+	background-image: url('./landing.jpg');
+	background-position: right;
+	background-size: cover;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.shirt {
+	border: 2px solid #ccc;
+	padding: 0.5rem;
+	display: flex;
+	flex-direction: row-reverse;
+	margin: 0.5rem 0;
+	align-items: center;
+	cursor: pointer;
+}
+
+.pant {
+	border: 2px solid #ccc;
+	padding: 0.5rem;
+	display: flex;
+	align-items: center;
+	cursor: pointer;
+}
+
+.saree {
+	border: 2px solid #ccc;
+	padding: 0.5rem;
+	display: flex;
+	align-items: center;
+	cursor: pointer;
+}
