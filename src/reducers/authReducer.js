@@ -2,6 +2,7 @@ import {
 	LOGIN_FAIL,
 	LOGIN_REQUEST,
 	LOGIN_SUCCESS,
+	LOGOUT,
 	RESET_AUTH,
 	SIGNUP_FAIL,
 	SIGNUP_REQUEST,
@@ -41,6 +42,11 @@ const authReducer = (state = initialState, action) => {
 				error: action.error,
 				success: false,
 				loading: false,
+			};
+		case LOGOUT:
+			return {
+				...state,
+				token: null,
 			};
 		case RESET_AUTH:
 			return {

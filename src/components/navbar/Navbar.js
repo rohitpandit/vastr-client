@@ -13,6 +13,7 @@ const Navbar = (props) => {
 
 		if (props.token) {
 			props.logout();
+			history.push('/login');
 		} else {
 			history.push('/login');
 		}
