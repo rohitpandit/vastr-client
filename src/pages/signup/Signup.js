@@ -9,6 +9,7 @@ const Signup = () => {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const [confirmPassword, setConfirmPassword] = useState('');
+	const [showPassword, setShowPassword] = useState(false);
 
 	const onSubmit = (e) => {
 		e.preventDefault();
@@ -31,6 +32,10 @@ const Signup = () => {
 		return;
 	};
 
+	const togglePassword = () => {
+		setShowPassword((state) => !state);
+	};
+
 	return (
 		<div className={classes.page}>
 			<Navbar />
@@ -51,15 +56,28 @@ const Signup = () => {
 							onChange={(e) => setEmail(e.target.value)}
 							required
 						/>
-						<input
-							type='password'
-							className='form-control my-3'
-							placeholder='password'
-							value={password}
-							onChange={(e) => setPassword(e.target.value)}
-							required
-							minLength='6'
-						/>
+						<div className={classes.password}>
+							<input
+								type={showPassword ? 'text' : 'password'}
+								className={`form-control my-3  `}
+								placeholder='password'
+								value={password}
+								onChange={(e) => setPassword(e.target.value)}
+								required
+								minLength='6'
+							/>
+							{showPassword ? (
+								<i
+									className={`fas fa-eye  my-3 ${classes.eye}`}
+									onClick={togglePassword}
+								/>
+							) : (
+								<i
+									className={`fas fa-eye-slash my-3   ${classes.eye}`}
+									onClick={togglePassword}
+								/>
+							)}
+						</div>
 						<input
 							type='password'
 							className='form-control my-3'

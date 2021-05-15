@@ -2,3 +2,13 @@
 	min-height: 100vh;
 	max-height: 100%;
 }
+
+.password {
+	position: relative;
+}
+
+.eye {
+	position: absolute;
+	top: 0;
+	right: 1rem;
+}

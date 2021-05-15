@@ -2,6 +2,12 @@
 	min-height: 100vh;
 }
 
-.shadow {
-	box-shadow: 3px 3px 5px #ccc;
+.password {
+	position: relative;
+}
+
+.eye {
+	position: absolute;
+	top: 0;
+	right: 1rem;
 }
