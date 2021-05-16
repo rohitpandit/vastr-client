@@ -10,6 +10,7 @@ import Cart from './pages/cart/Cart';
 import AboutUs from './pages/aboutUs/AboutUs';
 import ContactUs from './pages/contactUs/ContactUs';
 import PageNotFound from './pages/pageNotFound/PageNotFound';
+import Admin from './pages/admin/Admin';
 import './bootstrap.min.css';
 import './App.css';
 import Products from './pages/products/Products';
@@ -24,6 +25,7 @@ function App() {
 					<Route exact path='/signup' component={Signup} />
 					<ProtectedRoute exact path='/profile' component={Profile} />
 					<ProtectedRoute exact path='/cart' component={Cart} />
+					<ProtectedRoute exact path='/admin' component={Admin} />
 					<Route exact path='/product' component={Product} />
 					<Route exact path='/products' component={Products} />
 					<Route exact path='/about' component={AboutUs} />
