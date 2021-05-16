@@ -12,28 +12,16 @@
 	align-items: center;
 }
 
-.shirt {
+.card {
 	border: 2px solid #ccc;
 	padding: 0.5rem;
 	display: flex;
-	flex-direction: row-reverse;
 	margin: 0.5rem 0;
 	align-items: center;
 	cursor: pointer;
+	background-color: white;
 }
 
-.pant {
-	border: 2px solid #ccc;
-	padding: 0.5rem;
-	display: flex;
-	align-items: center;
-	cursor: pointer;
-}
-
-.saree {
-	border: 2px solid #ccc;
-	padding: 0.5rem;
-	display: flex;
-	align-items: center;
-	cursor: pointer;
+.shirt {
+	flex-direction: row-reverse;
 }

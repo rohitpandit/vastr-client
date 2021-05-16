@@ -4,6 +4,7 @@ import classes from './Home.module.css';
 import shirt from './shirt.jpg';
 import pant from './pant.jpg';
 import saree from './saree.jpg';
+import Footer from '../../components/footer/Footer';
 
 const Home = (props) => {
 	return (
@@ -14,7 +15,7 @@ const Home = (props) => {
 			</div>
 			<div className='container d-flex flex-column my-3'>
 				<div
-					className={classes.pant}
+					className={`${classes.card} shadow`}
 					onClick={() => {
 						props.history.push('/products/pant');
 					}}>
@@ -33,7 +34,7 @@ const Home = (props) => {
 					</div>
 				</div>
 				<div
-					className={classes.shirt}
+					className={` ${classes.card} ${classes.shirt}  shadow`}
 					onClick={() => {
 						props.history.push('/products/shirt');
 					}}>
@@ -52,7 +53,7 @@ const Home = (props) => {
 					</div>
 				</div>
 				<div
-					className={classes.saree}
+					className={`${classes.card} shadow`}
 					onClick={() => {
 						props.history.push('/products/saree');
 					}}>
@@ -71,6 +72,7 @@ const Home = (props) => {
 					</div>
 				</div>
 			</div>
+			<Footer />
 		</div>
 	);
 };
