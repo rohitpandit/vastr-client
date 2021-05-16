@@ -1,3 +1,41 @@
 .page {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
 	min-height: 100vh;
+}
+
+.main {
+	display: flex;
+	align-items: flex-start;
+}
+
+.filter {
+	padding: 2rem;
+	background-color: white;
+	margin: 1rem 0;
+	width: 15rem;
+}
+
+.filterSection {
+	margin: 2rem 0;
+}
+
+.content {
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.card {
+	padding: 0.5rem;
+	margin: 1rem;
+	background-color: white;
+	width: 15rem;
+	overflow: hidden;
+	text-align: center;
+}
+
+.card-img {
+	height: 20rem;
+	object-fit: cover;
 }

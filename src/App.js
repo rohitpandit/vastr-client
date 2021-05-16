@@ -12,6 +12,7 @@ import ContactUs from './pages/contactUs/ContactUs';
 import PageNotFound from './pages/pageNotFound/PageNotFound';
 import './bootstrap.min.css';
 import './App.css';
+import Products from './pages/products/Products';
 
 function App() {
 	return (
@@ -24,6 +25,7 @@ function App() {
 					<ProtectedRoute exact path='/profile' component={Profile} />
 					<ProtectedRoute exact path='/cart' component={Cart} />
 					<Route exact path='/product' component={Product} />
+					<Route exact path='/products' component={Products} />
 					<Route exact path='/about' component={AboutUs} />
 					<Route exact path='/contact' component={ContactUs} />
 					<Route path='*' component={PageNotFound} />
