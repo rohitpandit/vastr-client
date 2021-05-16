@@ -1,0 +1,28 @@
+.page {
+	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.addItem {
+	background-color: white;
+	padding: 1rem;
+	margin: 1rem 0;
+}
+
+.items {
+	background-color: white;
+	padding: 1rem;
+	margin: 1rem 0;
+}
+
+.orderItem {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.image {
+	height: 5rem;
+}
