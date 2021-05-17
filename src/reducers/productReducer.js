@@ -16,6 +16,7 @@ const initialState = {
 
 const productReducer = (state = initialState, action) => {
 	switch (action.type) {
+		case PRODUCT_POST_REQUEST:
 		case PRODUCT_GET_REQUEST:
 			return {
 				...state,
@@ -36,13 +37,6 @@ const productReducer = (state = initialState, action) => {
 				...state,
 				loading: false,
 				error: action.error,
-			};
-		case PRODUCT_POST_REQUEST:
-			return {
-				...state,
-				loading: true,
-				error: null,
-				success: false,
 			};
 
 		case PRODUCT_POST_SUCCESS:
