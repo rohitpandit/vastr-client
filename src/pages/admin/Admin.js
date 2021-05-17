@@ -18,13 +18,18 @@ const Admin = () => {
 					<h5>Add an Item</h5>
 					<hr />
 					<form className='p-3'>
-						<input type='file' className='form-control my-2' />
+						<input
+							type='file'
+							className='form-control my-2'
+							value={photo}
+							onChange={(e) => setPhoto(e.target.files[0])}
+						/>
 						<input
 							type='text'
 							placeholder='Description of the product'
 							className='form-control my-2'
-							value={photo}
-							onChange={(e) => setPhoto(e.target.files[0])}
+							value={desc}
+							onChange={(e) => setDesc(e.target.value)}
 							required
 						/>
 						<input
