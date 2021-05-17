@@ -1,28 +1,52 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
 import Navbar from '../../components/navbar/Navbar';
 import Footer from '../../components/footer/Footer';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import classes from './Admin.module.css';
 import shirt from '../../pages/home/shirt.jpg';
+import { postProduct } from '../../actions/productAction';
 
-const Admin = () => {
+const Admin = (props) => {
 	const [photo, setPhoto] = useState(null);
 	const [desc, setDesc] = useState('');
 	const [quantity, setQuantity] = useState(0);
 	const [price, setPrice] = useState(0);
 
+	useEffect(() => {
+		if (props.productError) {
+			toast.error(props.productError);
+		}
+		if (props.productSuccess) {
+			toast.success('Product added successfully');
+		}
+	}, [props]);
+
+	const onSubmit = (e) => {
+		e.preventDefault();
+
+		props.postProduct({ photo, desc, quantity, price });
+		setDesc('');
+		setPhoto(null);
+		setPrice(0);
+		setQuantity(0);
+	};
+
 	return (
 		<div className={classes.page}>
 			<Navbar />
 			<div className={` container `}>
+				<ToastContainer />
 				<div className={`${classes.addItem} shadow`}>
 					<h5>Add an Item</h5>
 					<hr />
-					<form className='p-3'>
+					<form className='p-3 text-center' onSubmit={onSubmit}>
 						<input
 							type='file'
 							className='form-control my-2'
 							value={photo}
-							onChange={(e) => setPhoto(e.target.files[0])}
+							onChange={(e) => setPhoto(e.target.file[0])}
 						/>
 						<input
 							type='text'
@@ -48,6 +72,9 @@ const Admin = () => {
 							onChange={(e) => setPrice(e.target.value)}
 							required
 						/>
+						<button type='submit' className='btn btn-outline-success  my-3'>
+							Add Product
+						</button>
 					</form>
 				</div>
 				<div className={`${classes.items} shadow`}>
@@ -87,4 +114,14 @@ const Admin = () => {
 	);
 };
 
-export default Admin;
+const mapStateToProps = (state) => ({
+	productLoading: state.product.loading,
+	productSuccess: state.product.success,
+	productError: state.product.error,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+	postProduct: (productInfo) => dispatch(postProduct(productInfo)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Admin);
