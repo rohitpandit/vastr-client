@@ -9,18 +9,18 @@ import {
 
 export const getOrders = () => async (dispatch) => {
 	try {
-		dispatch({ tyep: ORDER_GET_REQUEST });
+		dispatch({ type: ORDER_GET_REQUEST });
 
 		//axios request
 
 		dispatch({ type: ORDER_GET_SUCCESS, payload: ['success', 'success'] });
 	} catch (error) {
 		console.log(error);
-		dispatch({ tyep: ORDER_GET_FAIL });
+		dispatch({ type: ORDER_GET_FAIL });
 	}
 };
 
-export const addToOrders = (productId) => {
+export const addToOrders = (productId) => async (dispatch) => {
 	try {
 		dispatch({ type: ORDER_POST_REQUEST });
 

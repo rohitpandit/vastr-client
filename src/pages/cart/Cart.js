@@ -1,15 +1,33 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Navbar from '../../components/navbar/Navbar';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import Footer from '../../components/footer/Footer';
 import classes from './Cart.module.css';
 import shirt from '../home/shirt.jpg';
+import { getOrders } from '../../actions/orderAction';
 
-const Cart = () => {
+const Cart = (props) => {
+	useEffect(() => {
+		props.getOrders();
+	}, []);
+
+	useEffect(() => {
+		if (props.orderError) {
+			toast.error(props.orderError);
+		}
+		if (props.orderSuccess) {
+			toast.success('got successfully');
+		}
+	}, [props]);
+
 	return (
 		<div className={classes.page}>
 			<Navbar />
 			<div className={`${classes.main} container`}>
+				<ToastContainer />
 				<div className={classes.info}>
 					<div className={`${classes.address} shadow`}>
 						<h5>
@@ -81,4 +99,15 @@ const Cart = () => {
 	);
 };
 
-export default Cart;
+const mapStateToProps = (state) => ({
+	orderLoading: state.order.loading,
+	orderError: state.order.error,
+	orderSuccess: state.order.success,
+	order: state.order.order,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+	getOrders: () => dispatch(getOrders()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Cart);
