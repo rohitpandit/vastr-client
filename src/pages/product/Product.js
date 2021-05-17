@@ -7,6 +7,7 @@ import Footer from '../../components/footer/Footer';
 import classes from './Product.module.css';
 import shirt from '../home/shirt.jpg';
 import { getProduct } from '../../actions/productAction';
+import { addToOrders } from '../../actions/orderAction';
 
 const Product = (props) => {
 	const [product, setProduct] = useState(null);
@@ -19,11 +20,31 @@ const Product = (props) => {
 		if (props.productError) {
 			toast.error(props.error);
 		}
+	}, [props.productError]);
+
+	useEffect(() => {
 		if (props.productSuccess) {
 			setProduct(props.product);
 			toast.success('done');
 		}
-	}, []);
+	}, [props.productSuccess]);
+
+	useEffect(() => {
+		if (props.orderError) {
+			toast.error(props.orderError);
+		}
+	}, [props.orderError]);
+
+	useEffect(() => {
+		if (props.orderSuccess) {
+			toast.success('Product added to cart');
+		}
+	}, [props.orderSuccess]);
+
+	const addToCart = () => {
+		const productId = 123;
+		props.addToOrders(productId);
+	};
 
 	return (
 		<div className={classes.page}>
@@ -41,7 +62,7 @@ const Product = (props) => {
 						nesciunt!
 					</p>
 					<h3 className='text-danger'>&#8377;1000.00</h3>
-					<button className='btn btn-outline-success'>
+					<button className='btn btn-outline-success' onClick={addToCart}>
 						Add to Cart <i class='fas fa-shopping-cart'></i>
 					</button>
 				</div>
@@ -56,10 +77,14 @@ const mapStateToProps = (state) => ({
 	productError: state.product.error,
 	productSuccess: state.product.success,
 	product: state.product.product,
+	orderLoading: state.order.loading,
+	orderError: state.order.error,
+	orderSuccess: state.order.success,
 });
 
 const mapDispatchToProps = (dispatch) => ({
 	getProduct: (productId) => dispatch(getProduct(productId)),
+	addToOrders: (productId) => dispatch(addToOrders(productId)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Product);
