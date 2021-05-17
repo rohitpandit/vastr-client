@@ -1,19 +1,34 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
 import Navbar from '../../components/navbar/Navbar';
 import Footer from '../../components/footer/Footer';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import classes from './Profile.module.css';
+import { getUser, postUser } from '../../actions/userAction';
 
-const Profile = () => {
+const Profile = (props) => {
 	const [name, setName] = useState('');
 	const [email, setEmail] = useState('test@test.com');
 	const [address, setAddress] = useState('');
 
+	useEffect(() => {
+		props.getUser();
+	}, []);
+
+	useEffect(() => {
+		if (props.userError) {
+			toast.error(props.userError);
+		}
+		if (props.userSuccess) {
+			toast.success('updated successfully');
+		}
+	}, [props]);
+
 	const onSubmit = (e) => {
 		e.preventDefault();
 
-		toast.success('Profile updated successfully');
+		props.postUser({ name, address });
 	};
 
 	return (
@@ -58,4 +73,16 @@ const Profile = () => {
 	);
 };
 
-export default Profile;
+const mapStateToProps = (state) => ({
+	userLoading: state.user.laoding,
+	userError: state.user.error,
+	userSuccess: state.user.success,
+	user: state.user.user,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+	getUser: () => dispatch(getUser()),
+	postUser: (userInfo) => dispatch(postUser(userInfo)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Profile);
