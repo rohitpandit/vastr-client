@@ -1,6 +1,9 @@
 import {
 	PRODUCT_GET_FAIL,
 	PRODUCT_GET_REQUEST,
+	PRODUCT_GET_SUCCESS,
+	PRODUCT_POST_FAIL,
+	PRODUCT_POST_REQUEST,
 	PRODUCT_POST_SUCCESS,
 } from '../constants/productConstant';
 
@@ -21,7 +24,7 @@ const productReducer = (state = initialState, action) => {
 				success: false,
 				error: null,
 			};
-		case PRODUCT_POST_SUCCESS:
+		case PRODUCT_GET_SUCCESS:
 			return {
 				...state,
 				loading: false,
@@ -34,6 +37,28 @@ const productReducer = (state = initialState, action) => {
 				loading: false,
 				error: action.error,
 			};
+		case PRODUCT_POST_REQUEST:
+			return {
+				...state,
+				loading: true,
+				error: null,
+				success: false,
+			};
+
+		case PRODUCT_POST_SUCCESS:
+			return {
+				...state,
+				success: true,
+				loading: false,
+			};
+
+		case PRODUCT_POST_FAIL:
+			return {
+				...state,
+				loading: false,
+				error: action.error,
+			};
+
 		default:
 			return state;
 	}
