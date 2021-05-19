@@ -39,6 +39,10 @@ const Product = (props) => {
 	}, [props.orderSuccess]);
 
 	const addToCart = () => {
+		if (!props.roken) {
+			toast.error('You need to login in first');
+			return;
+		}
 		setUpdate(true);
 		props.addToOrders(props.product);
 	};
@@ -75,6 +79,7 @@ const Product = (props) => {
 };
 
 const mapStateToProps = (state) => ({
+	token: state.auth.token,
 	productLoading: state.product.loading,
 	productError: state.product.error,
 	productSuccess: state.product.success,
