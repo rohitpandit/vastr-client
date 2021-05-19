@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import ProtectedRoute from './components/protectedRoute/ProtectedRoute';
+import AdminProtectedRoute from './components/adminProtectedRoute/AdminProtectedRoute';
 import Home from './pages/home/Home';
 import Login from './pages/login/Login';
 import Signup from './pages/signup/Signup';
@@ -29,7 +30,7 @@ function App(props) {
 					<Route exact path='/signup' component={Signup} />
 					<ProtectedRoute exact path='/profile' component={Profile} />
 					<ProtectedRoute exact path='/cart' component={Cart} />
-					<ProtectedRoute exact path='/admin' component={Admin} />
+					<AdminProtectedRoute exact path='/admin' component={Admin} />
 					<Route exact path='/product/:id' component={Product} />
 					<Route exact path='/products/:type' component={Products} />
 					<Route exact path='/about' component={AboutUs} />

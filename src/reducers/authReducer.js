@@ -10,6 +10,7 @@ import {
 } from '../constants/authConstants';
 
 const initialState = {
+	admin: false,
 	error: null,
 	success: false,
 	token: null,
@@ -22,17 +23,25 @@ const authReducer = (state = initialState, action) => {
 		case SIGNUP_REQUEST:
 			return {
 				...state,
+				admin: false,
 				loading: true,
 				token: null,
 				error: null,
 				success: false,
 			};
 		case SIGNUP_SUCCESS:
-		case LOGIN_SUCCESS:
 			return {
 				...state,
 				loading: false,
 				token: action.payload,
+				success: true,
+			};
+		case LOGIN_SUCCESS:
+			return {
+				...state,
+				loading: false,
+				token: action.payload.token,
+				admin: action.payload.admin,
 				success: true,
 			};
 		case SIGNUP_FAIL:
@@ -47,6 +56,7 @@ const authReducer = (state = initialState, action) => {
 			return {
 				...state,
 				token: null,
+				admin: false,
 			};
 		case RESET_AUTH:
 			return {

@@ -59,6 +59,13 @@ const Navbar = (props) => {
 									Profile
 								</NavLink>
 							</li>
+							{props.admin && (
+								<li className='nav-item'>
+									<NavLink className='nav-link' exact to='/admin'>
+										Admin page
+									</NavLink>
+								</li>
+							)}
 						</ul>
 						<form className='d-flex' onClick={loginLogout}>
 							<button className='btn btn-outline-success' type='submit'>
@@ -74,6 +81,7 @@ const Navbar = (props) => {
 
 const mapStateToProps = (state) => ({
 	token: state.auth.token,
+	admin: state.auth.admin,
 });
 
 const mapDispatchToProps = (dispatch) => ({

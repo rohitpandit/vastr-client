@@ -20,7 +20,7 @@ export const login = (userInfo) => async (dispatch) => {
 			userInfo
 		);
 
-		dispatch({ type: LOGIN_SUCCESS, payload: result.data.token });
+		dispatch({ type: LOGIN_SUCCESS, payload: result.data });
 		saveState(result.data.token);
 
 		//removing success value
