@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -10,8 +11,15 @@ import pant from '../home/pant.jpg';
 import saree from '../home/saree.jpg';
 import { addToOrders } from '../../actions/orderAction';
 import { Link } from 'react-router-dom';
+import { getProductList } from '../../actions/productAction';
 
 const Products = (props) => {
+	const { type } = useParams();
+
+	useEffect(() => {
+		props.getProductList(type);
+	}, []);
+
 	useEffect(() => {
 		if (props.orderSuccess) {
 			toast.success('Prduct added to cart');
@@ -161,66 +169,21 @@ const Products = (props) => {
 					</div>
 				</div>
 				<div className={`${classes.content} `}>
-					<div className={`${classes.card} shadow`}>
-						<Link to='/product'>
-							<img src={saree} alt='' className='card-img-top' />
-						</Link>
-						<h5 className='m-1'>Brand 1 Saree</h5>
-						<h5 className='text-danger'>&#8377;1000</h5>
-						<button
-							className='btn btn-outline-success'
-							onClick={(productId) => addToCart(productId)}>
-							Add to Cart <i class='fas fa-shopping-cart'></i>
-						</button>
-					</div>
-					<div className={`${classes.card} shadow`}>
-						<Link to='/product'>
-							<img src={shirt} alt='' className='card-img-top' />
-						</Link>
-						<h5 className='m-1'>Brand 1 Saree</h5>
-						<h5 className='text-danger'>&#8377;1000</h5>
-						<button
-							className='btn btn-outline-success'
-							onClick={(productId) => addToCart(productId)}>
-							Add to Cart <i class='fas fa-shopping-cart'></i>
-						</button>
-					</div>
-					<div className={`${classes.card} shadow`}>
-						<Link to='/product'>
-							<img src={pant} alt='' className='card-img-top' />
-						</Link>
-						<h5 className='m-1'>Brand 1 Saree</h5>
-						<h5 className='text-danger'>&#8377;1000</h5>
-						<button
-							className='btn btn-outline-success'
-							onClick={(productId) => addToCart(productId)}>
-							Add to Cart <i class='fas fa-shopping-cart'></i>
-						</button>
-					</div>
-					<div className={`${classes.card} shadow `}>
-						<Link to='/product'>
-							<img src={saree} alt='' className='card-img-top' />
-						</Link>
-						<h5 className='m-1'>Brand 1 Saree</h5>
-						<h5 className='text-danger'>&#8377;2000</h5>
-						<button
-							className='btn btn-outline-success'
-							onClick={(productId) => addToCart(productId)}>
-							Add to Cart <i class='fas fa-shopping-cart'></i>
-						</button>
-					</div>
-					<div className={`${classes.card} shadow`}>
-						<Link to='/product'>
-							<img src={saree} alt='' className='card-img-top' />
-						</Link>
-						<h5 className='m-1'>Brand 1 Saree</h5>
-						<h5 className='text-danger'>&#8377;3000</h5>
-						<button
-							className='btn btn-outline-success'
-							onClick={(productId) => addToCart(productId)}>
-							Add to Cart <i class='fas fa-shopping-cart'></i>
-						</button>
-					</div>
+					{props.productList &&
+						props.productList.map((product) => (
+							<div className={`${classes.card} shadow`}>
+								<Link to='/product'>
+									<img src={product.url} alt='' className='card-img-top' />
+								</Link>
+								<h5 className='m-1'>{product.desc}</h5>
+								<h5 className='text-danger'>&#8377;{product.price}</h5>
+								<button
+									className='btn btn-outline-success'
+									onClick={(productId) => addToCart(productId)}>
+									Add to Cart <i class='fas fa-shopping-cart'></i>
+								</button>
+							</div>
+						))}
 				</div>
 			</div>
 			<Footer />
@@ -232,10 +195,15 @@ const mapStateToProps = (state) => ({
 	orderLoading: state.order.loading,
 	orderSuccess: state.order.success,
 	orderError: state.order.error,
+	productLoading: state.product.loading,
+	productSuccess: state.product.success,
+	productError: state.product.error,
+	productList: state.product.products,
 });
 
 const mapDispatchToProps = (dispatch) => ({
 	addToOrders: (productId) => dispatch(addToOrders(productId)),
+	getProductList: (type) => dispatch(getProductList(type)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Products);
