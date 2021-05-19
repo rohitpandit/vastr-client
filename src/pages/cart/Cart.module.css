@@ -37,6 +37,7 @@
 }
 
 .amount {
+	margin: 1rem 0;
 	flex: 1;
 	background-color: white;
 	padding: 1rem;

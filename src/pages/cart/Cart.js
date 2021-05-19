@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Navbar from '../../components/navbar/Navbar';
@@ -10,6 +10,14 @@ import { getOrders } from '../../actions/orderAction';
 import { getUser } from '../../actions/userAction';
 
 const Cart = (props) => {
+	const [update, setUpdate] = useState(false);
+	const [sum, setSum] = useState(0);
+	const [total, setTotal] = useState(0);
+	const [discount, setDiscount] = useState(0);
+	const dilevary = 100;
+
+	const discountPercent = 10;
+
 	useEffect(() => {
 		props.getOrders();
 		props.getUser();
@@ -19,10 +27,37 @@ const Cart = (props) => {
 		if (props.orderError) {
 			toast.error(props.orderError);
 		}
-		if (props.orderSuccess) {
-			toast.success('got successfully');
+	}, [props.orderError]);
+
+	useEffect(() => {
+		if (props.orderSuccess & update) {
+			toast.success('updated successfully');
 		}
-	}, [props]);
+		if (props.orderSuccess) {
+			const s = calculateSum();
+			setSum(s);
+			setDiscount(calculateDiscount());
+			setTotal(calculateTotal());
+		}
+	}, [props.orderSuccess]);
+
+	const calculateSum = () => {
+		if (props.orders) {
+			return props.orders.reduce(
+				(acc, item) => (acc += item.price * item.quantity),
+				0
+			);
+		}
+		return 0;
+	};
+
+	const calculateDiscount = () => {
+		return Math.floor((calculateSum() * discountPercent) / 100);
+	};
+
+	const calculateTotal = () => {
+		return calculateSum() - calculateDiscount() + 100;
+	};
 
 	return (
 		<div className={classes.page}>
@@ -45,7 +80,7 @@ const Cart = (props) => {
 						<hr />
 						{props.orders &&
 							props.orders.map((item) => (
-								<div className={classes.orderItem}>
+								<div className={classes.orderItem} key={item._id}>
 									<img src={item.thumbUrl} alt='' className={classes.image} />
 									<h6>{item.desc}</h6>
 									<p>
@@ -66,21 +101,21 @@ const Cart = (props) => {
 					<h5>Total</h5>
 					<hr />
 					<div className='d-flex align-items-center justify-content-around'>
-						<h6>Item Price:</h6> <h4>&#8377;1000.00</h4>
+						<h6>Item Price:</h6> <h4>&#8377;{sum}</h4>
 					</div>
 					<div className='d-flex align-items-center justify-content-around'>
-						<h6>Shipping Price:</h6> <h4>&#8377;100.00</h4>
+						<h6>Shipping Price:</h6> <h4>&#8377;100</h4>
 					</div>
 					<div className='d-flex align-items-center justify-content-around'>
-						<h6>Discount:</h6> <h4>&#8377;10.00</h4>
+						<h6>Discount 10%:</h6> <h4>&#8377;{discount}</h4>
 					</div>
 					<hr />
 					<div className='d-flex align-items-center justify-content-around'>
-						<h6>Net Payable:</h6>{' '}
-						<h4 className='text-danger'>&#8377;1090.00</h4>
+						<h6 className='text-danger'>Net Payable:</h6>{' '}
+						<h4 className='text-danger'>&#8377;{total}</h4>
 					</div>
 					<button className='btn btn-outline-primary'>
-						Pay &#8377;1090.00{' '}
+						Pay &#8377;{total}{' '}
 					</button>
 				</div>
 			</div>
