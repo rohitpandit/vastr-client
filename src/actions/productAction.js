@@ -49,18 +49,31 @@ export const postProduct = (productData) => async (dispatch) => {
 	}
 };
 
-export const getProductList = () => async (dispatch) => {
-	try {
-		dispatch({ type: PRODUCTLIST_GET_REQUEST });
+export const getProductList =
+	(type = '') =>
+	async (dispatch) => {
+		try {
+			dispatch({ type: PRODUCTLIST_GET_REQUEST });
 
-		//axios request
+			let productList;
+			let result;
 
-		dispatch({
-			type: PRODUCTLIST_GET_SUCCESS,
-			payload: ['success', 'success1'],
-		});
-	} catch (error) {
-		console.log(error);
-		dispatch({ type: PRODUCTLIST_GET_FAIL, error: error });
-	}
-};
+			if (type.length > 0) {
+				result = await axios.get(`http://localhost:5000/product/${type}`);
+			} else {
+				result = await axios.get(`http://localhost:5000/product`);
+			}
+
+			productList = result.data.productList;
+
+			console.log(productList);
+
+			dispatch({
+				type: PRODUCTLIST_GET_SUCCESS,
+				payload: productList,
+			});
+		} catch (error) {
+			console.log(error);
+			dispatch({ type: PRODUCTLIST_GET_FAIL, error: error });
+		}
+	};

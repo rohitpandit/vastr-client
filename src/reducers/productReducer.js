@@ -1,5 +1,7 @@
 import {
+	PRODUCTLIST_GET_FAIL,
 	PRODUCTLIST_GET_REQUEST,
+	PRODUCTLIST_GET_SUCCESS,
 	PRODUCT_GET_FAIL,
 	PRODUCT_GET_REQUEST,
 	PRODUCT_GET_SUCCESS,
@@ -61,6 +63,19 @@ const productReducer = (state = initialState, action) => {
 				products: [],
 				error: null,
 				success: true,
+			};
+		case PRODUCTLIST_GET_SUCCESS:
+			return {
+				...state,
+				products: action.payload,
+				success: true,
+				loading: false,
+			};
+		case PRODUCTLIST_GET_FAIL:
+			return {
+				...state,
+				error: action.error,
+				loading: false,
 			};
 		default:
 			return state;

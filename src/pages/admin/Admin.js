@@ -6,7 +6,8 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import classes from './Admin.module.css';
 import shirt from '../../pages/home/shirt.jpg';
-import { postProduct } from '../../actions/productAction';
+import { getProductList, postProduct } from '../../actions/productAction';
+import Loading from '../../components/loading/Loading';
 
 const Admin = (props) => {
 	const [category, setCategory] = useState('');
@@ -14,6 +15,10 @@ const Admin = (props) => {
 	const [desc, setDesc] = useState('');
 	const [quantity, setQuantity] = useState(0);
 	const [price, setPrice] = useState(0);
+
+	useEffect(() => {
+		props.getProductList();
+	}, []);
 
 	useEffect(() => {
 		if (props.productError) {
@@ -45,12 +50,13 @@ const Admin = (props) => {
 	return (
 		<div className={classes.page}>
 			<Navbar />
+			{props.productLoading && <Loading />}
 			<div className={` container `}>
 				<ToastContainer />
 				<div className={`${classes.addItem} shadow`}>
 					<h5>Add an Item</h5>
 					<hr />
-					<form className='p-3 text-center' onSubmit={onSubmit}>
+					<form className='p-3 text-center ' onSubmit={onSubmit}>
 						<input
 							id='photo'
 							type='file'
@@ -93,41 +99,34 @@ const Admin = (props) => {
 							onChange={(e) => setPrice(e.target.value)}
 							required
 						/>
-						<button type='submit' className='btn btn-outline-success  my-3'>
-							Add Product
+						<button
+							type='submit'
+							className='btn btn-outline-success  my-3'
+							disabled={props.productLoading}>
+							{props.productLoading ? 'Loading...' : 'Add product'}
 						</button>
 					</form>
 				</div>
 				<div className={`${classes.items} shadow`}>
 					<h5>Items List</h5> <hr />
-					<div className={classes.orderItem}>
-						<img src={shirt} alt='' className={classes.image} />
-						<h6>Shirt Cool looking</h6>
-						<div>
-							Quantity:{' '}
-							<h5>
-								<i className='fas fa-plus-square fa-2'></i> 1{' '}
-								<i className='fas fa-minus-square fa-2'></i>
-							</h5>
-						</div>
-						<div>
-							Price: <h5>&#8377;1000.00</h5>
-						</div>
-					</div>
-					<div className={classes.orderItem}>
-						<img src={shirt} alt='' className={classes.image} />
-						<h6>Shirt Cool looking</h6>
-						<div>
-							Quantity:{' '}
-							<h5>
-								<i className='fas fa-plus-square fa-2'></i> 1{' '}
-								<i className='fas fa-minus-square fa-2'></i>
-							</h5>
-						</div>
-						<div>
-							Price: <h5>&#8377;1000.00</h5>
-						</div>
-					</div>
+					{props.productList &&
+						props.productList.map((product) => (
+							<div className={classes.orderItem} key={product._id}>
+								<img src={product.thumbUrl} alt='' className={classes.image} />
+								<h6>{product.desc}</h6>
+								<div>
+									Quantity:{' '}
+									<h5>
+										<i className='fas fa-plus-square fa-2'></i>{' '}
+										{product.quantity}{' '}
+										<i className='fas fa-minus-square fa-2'></i>
+									</h5>
+								</div>
+								<div>
+									Price: <h5>&#8377;{product.price}</h5>
+								</div>
+							</div>
+						))}
 				</div>
 			</div>
 			<Footer />
@@ -139,10 +138,12 @@ const mapStateToProps = (state) => ({
 	productLoading: state.product.loading,
 	productSuccess: state.product.success,
 	productError: state.product.error,
+	productList: state.product.products,
 });
 
 const mapDispatchToProps = (dispatch) => ({
 	postProduct: (productInfo) => dispatch(postProduct(productInfo)),
+	getProductList: () => dispatch(getProductList()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Admin);
