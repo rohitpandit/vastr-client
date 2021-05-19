@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { ToastContainer, toast } from 'react-toastify';
@@ -12,14 +12,16 @@ import { getProductList } from '../../actions/productAction';
 
 const Products = (props) => {
 	const { type } = useParams();
+	const [update, setUpdate] = useState(false);
 
 	useEffect(() => {
 		props.getProductList(type);
-	}, []);
+	}, [props.location]);
 
 	useEffect(() => {
-		if (props.orderSuccess) {
+		if (props.orderSuccess && update) {
 			toast.success('Prduct added to cart');
+			setUpdate(false);
 		}
 	}, [props.orderSuccess]);
 
@@ -30,6 +32,7 @@ const Products = (props) => {
 	}, [props.orderError]);
 
 	const addToCart = (product) => {
+		setUpdate(true);
 		console.log(product);
 		props.addToOrders(product);
 	};
@@ -170,9 +173,11 @@ const Products = (props) => {
 					{props.productList &&
 						props.productList.map((product) => (
 							<div key={product._id} className={`${classes.card} shadow`}>
-								<Link to={`/product/${product._id}`}>
-									<img src={product.url} alt='' className='card-img-top' />
-								</Link>
+								<div className={classes.image}>
+									<Link to={`/product/${product._id}`}>
+										<img src={product.url} alt='' className={classes.cardImg} />
+									</Link>
+								</div>
 								<h5 className='m-1'>{product.desc}</h5>
 								<h5 className='text-danger'>&#8377;{product.price}</h5>
 								<button

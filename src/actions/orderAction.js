@@ -27,6 +27,8 @@ export const addToOrders = (product) => async (dispatch) => {
 		dispatch({ type: ORDER_POST_REQUEST });
 		console.log('Action', product);
 
+		product.quantity = 1;
+
 		//axios request
 		const result = await axios.post('http://localhost:5000/order', { product });
 

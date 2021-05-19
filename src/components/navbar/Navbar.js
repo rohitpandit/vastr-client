@@ -34,6 +34,22 @@ const Navbar = (props) => {
 								</NavLink>
 							</li>
 							<li className='nav-item'>
+								<NavLink className='nav-link' exact to='/products/shirt'>
+									Shirts
+								</NavLink>
+							</li>
+							<li className='nav-item'>
+								<NavLink className='nav-link' exact to='/products/pant'>
+									Pants
+								</NavLink>
+							</li>
+							<li className='nav-item'>
+								<NavLink className='nav-link' exact to='/products/saree'>
+									Saree
+								</NavLink>
+							</li>
+
+							<li className='nav-item'>
 								<NavLink className='nav-link' exact to='/cart'>
 									Cart
 								</NavLink>

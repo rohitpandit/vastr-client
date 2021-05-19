@@ -31,11 +31,23 @@
 	margin: 1rem;
 	background-color: white;
 	width: 15rem;
+	height: 28rem;
 	overflow: hidden;
 	text-align: center;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
 }
 
-.card-img {
-	height: 20rem;
+.image {
+	height: 18rem;
+	width: 13rem;
+}
+
+.cardImg {
+	height: 18rem;
+	width: 13rem;
 	object-fit: cover;
+	overflow: hidden;
 }
