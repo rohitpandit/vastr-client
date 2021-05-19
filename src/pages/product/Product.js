@@ -13,6 +13,7 @@ import { addToOrders } from '../../actions/orderAction';
 
 const Product = (props) => {
 	const { id } = useParams();
+	const [update, setUpdate] = useState(false);
 
 	useEffect(() => {
 		props.getProduct(id);
@@ -20,15 +21,9 @@ const Product = (props) => {
 
 	useEffect(() => {
 		if (props.productError) {
-			toast.error(props.error);
+			toast.error(props.productError);
 		}
 	}, [props.productError]);
-
-	useEffect(() => {
-		if (props.productSuccess) {
-			toast.success('done');
-		}
-	}, [props.productSuccess]);
 
 	useEffect(() => {
 		if (props.orderError) {
@@ -37,36 +32,42 @@ const Product = (props) => {
 	}, [props.orderError]);
 
 	useEffect(() => {
-		if (props.orderSuccess) {
+		if (props.orderSuccess && update) {
 			toast.success('Product added to cart');
+			setUpdate(false);
 		}
 	}, [props.orderSuccess]);
 
 	const addToCart = () => {
+		setUpdate(true);
 		props.addToOrders(props.product);
 	};
 
 	return (
 		<div className={classes.page}>
 			{props.loading && <Loading />}
-			<Navbar />
+			<Navbar /> {props.productLoading && <Loading />}
 			<div className={`${classes.main} container shadow`}>
 				<ToastContainer />
-				<div className={classes.image}>
-					<img src={shirt} alt='' className={classes.imageImg} />
-				</div>
-				<div className={classes.info}>
-					<h3></h3>
-					<p>
-						Lorem ipsum dolor sit amet consectetur adipisicing elit. Beatae vero
-						dolores autem. Dolorum optio velit hic amet officia tempora
-						nesciunt!
-					</p>
-					<h3 className='text-danger'>&#8377;1000.00</h3>
-					<button className='btn btn-outline-success' onClick={addToCart}>
-						Add to Cart <i className='fas fa-shopping-cart'></i>
-					</button>
-				</div>
+				{props.product && (
+					<>
+						<div className={classes.image}>
+							<img
+								src={props.product && props.product.url}
+								alt=''
+								className={classes.imageImg}
+							/>
+						</div>
+						<div className={classes.info}>
+							<h3>{props.product.desc}</h3>
+							<p></p>
+							<h3 className='text-danger'>&#8377;1000.00</h3>
+							<button className='btn btn-outline-success' onClick={addToCart}>
+								Add to Cart <i className='fas fa-shopping-cart'></i>
+							</button>
+						</div>
+					</>
+				)}
 			</div>
 			<Footer />
 		</div>
