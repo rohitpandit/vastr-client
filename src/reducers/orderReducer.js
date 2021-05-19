@@ -5,6 +5,12 @@ import {
 	ORDER_POST_FAIL,
 	ORDER_POST_REQUEST,
 	ORDER_POST_SUCCESS,
+	ORDER_DECREMENT_FAIL,
+	ORDER_DECREMENT_REQUEST,
+	ORDER_DECREMENT_SUCCESS,
+	ORDER_INCREMENT_FAIL,
+	ORDER_INCREMENT_REQUEST,
+	ORDER_INCREMENT_SUCCESS,
 } from '../constants/orderConstant';
 
 const initialState = {
@@ -45,6 +51,28 @@ const ordereReducer = (state = initialState, action) => {
 				loading: false,
 			};
 		case ORDER_POST_FAIL:
+			return {
+				...state,
+				loading: false,
+				error: action.error,
+			};
+		case ORDER_DECREMENT_REQUEST:
+		case ORDER_INCREMENT_REQUEST:
+			return {
+				...state,
+				loading: true,
+				success: false,
+			};
+		case ORDER_DECREMENT_SUCCESS:
+		case ORDER_INCREMENT_SUCCESS:
+			return {
+				...state,
+				loading: false,
+				success: true,
+				orders: action.payload,
+			};
+		case ORDER_DECREMENT_FAIL:
+		case ORDER_INCREMENT_FAIL:
 			return {
 				...state,
 				loading: false,
