@@ -29,8 +29,9 @@ const Products = (props) => {
 		}
 	}, [props.orderError]);
 
-	const addToCart = (productId) => {
-		props.addToOrders(productId);
+	const addToCart = (product) => {
+		console.log(product);
+		props.addToOrders(product);
 	};
 
 	return (
@@ -176,7 +177,7 @@ const Products = (props) => {
 								<h5 className='text-danger'>&#8377;{product.price}</h5>
 								<button
 									className='btn btn-outline-success'
-									onClick={() => addToCart(product._id)}>
+									onClick={() => addToCart(product)}>
 									Add to Cart <i className='fas fa-shopping-cart'></i>
 								</button>
 							</div>
@@ -199,7 +200,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-	addToOrders: (productId) => dispatch(addToOrders(productId)),
+	addToOrders: (product) => dispatch(addToOrders(product)),
 	getProductList: (type) => dispatch(getProductList(type)),
 });
 
