@@ -170,7 +170,7 @@ const Products = (props) => {
 					{props.productList &&
 						props.productList.map((product) => (
 							<div key={product._id} className={`${classes.card} shadow`}>
-								<Link to='/product'>
+								<Link to={`/product/${product._id}`}>
 									<img src={product.url} alt='' className='card-img-top' />
 								</Link>
 								<h5 className='m-1'>{product.desc}</h5>

@@ -16,9 +16,14 @@ export const getProduct = (productId) => async (dispatch) => {
 	try {
 		dispatch({ type: PRODUCT_GET_REQUEST });
 
-		//axios request
+		console.log('productid', productId);
 
-		dispatch({ type: PRODUCT_GET_SUCCESS, payload: 'success' });
+		//axios request
+		const result = await axios.get(
+			`http://localhost:5000/product/single/${productId}`
+		);
+
+		dispatch({ type: PRODUCT_GET_SUCCESS, payload: result.data.product });
 	} catch (error) {
 		console.log(error);
 		dispatch({ type: PRODUCT_GET_FAIL, error: error });

@@ -30,7 +30,7 @@ function App(props) {
 					<ProtectedRoute exact path='/profile' component={Profile} />
 					<ProtectedRoute exact path='/cart' component={Cart} />
 					<ProtectedRoute exact path='/admin' component={Admin} />
-					<Route exact path='/product' component={Product} />
+					<Route exact path='/product/:id' component={Product} />
 					<Route exact path='/products/:type' component={Products} />
 					<Route exact path='/about' component={AboutUs} />
 					<Route exact path='/contact' component={ContactUs} />

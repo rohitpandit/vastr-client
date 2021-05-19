@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
+import { useParams } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Navbar from '../../components/navbar/Navbar';
@@ -7,13 +8,14 @@ import Footer from '../../components/footer/Footer';
 import classes from './Product.module.css';
 import shirt from '../home/shirt.jpg';
 import { getProduct } from '../../actions/productAction';
+import Loading from '../../components/loading/Loading';
 import { addToOrders } from '../../actions/orderAction';
 
 const Product = (props) => {
-	const [product, setProduct] = useState(null);
+	const { id } = useParams();
 
 	useEffect(() => {
-		props.getProduct(12);
+		props.getProduct(id);
 	}, []);
 
 	useEffect(() => {
@@ -24,7 +26,6 @@ const Product = (props) => {
 
 	useEffect(() => {
 		if (props.productSuccess) {
-			setProduct(props.product);
 			toast.success('done');
 		}
 	}, [props.productSuccess]);
@@ -42,12 +43,12 @@ const Product = (props) => {
 	}, [props.orderSuccess]);
 
 	const addToCart = () => {
-		const productId = 123;
-		props.addToOrders(productId);
+		props.addToOrders(props.product);
 	};
 
 	return (
 		<div className={classes.page}>
+			{props.loading && <Loading />}
 			<Navbar />
 			<div className={`${classes.main} container shadow`}>
 				<ToastContainer />
@@ -55,7 +56,7 @@ const Product = (props) => {
 					<img src={shirt} alt='' className={classes.imageImg} />
 				</div>
 				<div className={classes.info}>
-					<h3>Brand 1 shirt</h3>
+					<h3></h3>
 					<p>
 						Lorem ipsum dolor sit amet consectetur adipisicing elit. Beatae vero
 						dolores autem. Dolorum optio velit hic amet officia tempora
@@ -63,7 +64,7 @@ const Product = (props) => {
 					</p>
 					<h3 className='text-danger'>&#8377;1000.00</h3>
 					<button className='btn btn-outline-success' onClick={addToCart}>
-						Add to Cart <i class='fas fa-shopping-cart'></i>
+						Add to Cart <i className='fas fa-shopping-cart'></i>
 					</button>
 				</div>
 			</div>
