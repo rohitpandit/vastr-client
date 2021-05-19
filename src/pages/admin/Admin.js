@@ -9,7 +9,8 @@ import shirt from '../../pages/home/shirt.jpg';
 import { postProduct } from '../../actions/productAction';
 
 const Admin = (props) => {
-	const [photo, setPhoto] = useState(null);
+	const [category, setCategory] = useState('');
+	const [photo, setPhoto] = useState('');
 	const [desc, setDesc] = useState('');
 	const [quantity, setQuantity] = useState(0);
 	const [price, setPrice] = useState(0);
@@ -25,12 +26,20 @@ const Admin = (props) => {
 
 	const onSubmit = (e) => {
 		e.preventDefault();
+		console.log(photo);
 
-		props.postProduct({ photo, desc, quantity, price });
+		if (photo === '') {
+			toast.error('choose a photo first');
+			return;
+		}
+
+		props.postProduct({ photo, desc, quantity, price, category });
+		setCategory('');
 		setDesc('');
-		setPhoto(null);
+		setPhoto('');
 		setPrice(0);
 		setQuantity(0);
+		document.getElementById('photo').value = null;
 	};
 
 	return (
@@ -43,10 +52,22 @@ const Admin = (props) => {
 					<hr />
 					<form className='p-3 text-center' onSubmit={onSubmit}>
 						<input
+							id='photo'
 							type='file'
 							className='form-control my-2'
-							value={photo}
-							onChange={(e) => setPhoto(e.target.file[0])}
+							// value={photo}
+							onChange={(e) => {
+								setPhoto(e.target.files[0]);
+							}}
+							required
+						/>
+						<input
+							type='text'
+							placeholder='category of the product'
+							className='form-control my-2'
+							value={category}
+							onChange={(e) => setCategory(e.target.value)}
+							required
 						/>
 						<input
 							type='text'
@@ -82,30 +103,30 @@ const Admin = (props) => {
 					<div className={classes.orderItem}>
 						<img src={shirt} alt='' className={classes.image} />
 						<h6>Shirt Cool looking</h6>
-						<p>
+						<div>
 							Quantity:{' '}
 							<h5>
-								<i class='fas fa-plus-square fa-2'></i> 1{' '}
-								<i class='fas fa-minus-square fa-2'></i>
+								<i className='fas fa-plus-square fa-2'></i> 1{' '}
+								<i className='fas fa-minus-square fa-2'></i>
 							</h5>
-						</p>
-						<p>
+						</div>
+						<div>
 							Price: <h5>&#8377;1000.00</h5>
-						</p>
+						</div>
 					</div>
 					<div className={classes.orderItem}>
 						<img src={shirt} alt='' className={classes.image} />
 						<h6>Shirt Cool looking</h6>
-						<p>
+						<div>
 							Quantity:{' '}
 							<h5>
-								<i class='fas fa-plus-square fa-2'></i> 1{' '}
-								<i class='fas fa-minus-square fa-2'></i>
+								<i className='fas fa-plus-square fa-2'></i> 1{' '}
+								<i className='fas fa-minus-square fa-2'></i>
 							</h5>
-						</p>
-						<p>
+						</div>
+						<div>
 							Price: <h5>&#8377;1000.00</h5>
-						</p>
+						</div>
 					</div>
 				</div>
 			</div>
