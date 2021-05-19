@@ -6,34 +6,53 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import classes from './Profile.module.css';
 import { getUser, postUser } from '../../actions/userAction';
+import Loading from '../../components/loading/Loading';
 
 const Profile = (props) => {
+	const [email, setEmail] = useState('');
 	const [name, setName] = useState('');
-	const [email, setEmail] = useState('test@test.com');
 	const [address, setAddress] = useState('');
+	const [updated, setUpdated] = useState(false);
+
+	useEffect(async () => {
+		props.getUser();
+		console.log('hi');
+	}, []);
 
 	useEffect(() => {
-		props.getUser();
-	}, []);
+		if (props.user && props.user.name) {
+			setName(props.user.name);
+		}
+		if (props.user && props.user.address) {
+			setAddress(props.user.address);
+		}
+		if (props.user && props.user.email) {
+			setEmail(props.user.email);
+		}
+	}, [props.user]);
 
 	useEffect(() => {
 		if (props.userError) {
 			toast.error(props.userError);
 		}
-		if (props.userSuccess) {
+	}, [props.userError]);
+
+	useEffect(() => {
+		if (props.userSuccess && updated) {
 			toast.success('updated successfully');
+			setUpdated(false);
 		}
-	}, [props]);
+	}, [props.userSuccess, updated]);
 
 	const onSubmit = (e) => {
 		e.preventDefault();
-
+		setUpdated(true);
 		props.postUser({ name, address });
 	};
 
 	return (
 		<div className={classes.page}>
-			<Navbar />
+			<Navbar /> {props.userLoading && <Loading />}
 			<ToastContainer />
 			<div className={`${classes.main} container shadow`}>
 				<div className='d-flex justify-content-center'>
@@ -46,8 +65,9 @@ const Profile = (props) => {
 					<input
 						type='text'
 						className='form-control my-4'
-						disabled
 						value={email}
+						onChange={(e) => setEmail(e.target.value)}
+						placeholder='Enter your email'
 					/>
 					<input
 						type='text'

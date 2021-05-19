@@ -1,5 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { connect } from 'react-redux';
+import axios from 'axios';
 import ProtectedRoute from './components/protectedRoute/ProtectedRoute';
 import Home from './pages/home/Home';
 import Login from './pages/login/Login';
@@ -15,7 +17,9 @@ import './bootstrap.min.css';
 import './App.css';
 import Products from './pages/products/Products';
 
-function App() {
+function App(props) {
+	axios.defaults.headers.common['Authorization'] = `Bearer ${props.token}`;
+
 	return (
 		<div className='App'>
 			<Router>
@@ -37,4 +41,8 @@ function App() {
 	);
 }
 
-export default App;
+const mapStateToProps = (state) => ({
+	token: state.auth.token,
+});
+
+export default connect(mapStateToProps)(App);

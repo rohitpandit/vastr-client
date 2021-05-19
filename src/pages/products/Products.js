@@ -6,9 +6,6 @@ import 'react-toastify/dist/ReactToastify.css';
 import Navbar from '../../components/navbar/Navbar';
 import Footer from '../../components/footer/Footer';
 import classes from './Products.module.css';
-import shirt from '../home/shirt.jpg';
-import pant from '../home/pant.jpg';
-import saree from '../home/saree.jpg';
 import { addToOrders } from '../../actions/orderAction';
 import { Link } from 'react-router-dom';
 import { getProductList } from '../../actions/productAction';
@@ -46,58 +43,58 @@ const Products = (props) => {
 					<hr />
 					<div className={classes.filterSection}>
 						<p>By Brands</p>
-						<div class='form-check '>
+						<div className='form-check '>
 							<input
-								class='form-check-input'
+								className='form-check-input'
 								type='checkbox'
 								id='inlineCheckbox1'
 								value='option1'
 							/>
-							<label class='form-check-label' for='inlineCheckbox1'>
+							<label className='form-check-label' htmlFor='inlineCheckbox1'>
 								Brand 1
 							</label>
 						</div>
-						<div class='form-check '>
+						<div className='form-check '>
 							<input
-								class='form-check-input'
+								className='form-check-input'
 								type='checkbox'
 								id='inlineCheckbox2'
 								value='option2'
 							/>
-							<label class='form-check-label' for='inlineCheckbox2'>
+							<label className='form-check-label' htmlFor='inlineCheckbox2'>
 								Brand 2
 							</label>
 						</div>
-						<div class='form-check'>
+						<div className='form-check'>
 							<input
-								class='form-check-input'
+								className='form-check-input'
 								type='checkbox'
 								id='inlineCheckbox3'
 								value='option3'
 							/>
-							<label class='form-check-label' for='inlineCheckbox3'>
+							<label className='form-check-label' htmlFor='inlineCheckbox3'>
 								Brand 3
 							</label>
 						</div>
-						<div class='form-check'>
+						<div className='form-check'>
 							<input
-								class='form-check-input'
+								className='form-check-input'
 								type='checkbox'
 								id='inlineCheckbox3'
 								value='option3'
 							/>
-							<label class='form-check-label' for='inlineCheckbox3'>
+							<label className='form-check-label' htmlFor='inlineCheckbox3'>
 								Brand 4
 							</label>
 						</div>
-						<div class='form-check'>
+						<div className='form-check'>
 							<input
-								class='form-check-input'
+								className='form-check-input'
 								type='checkbox'
 								id='inlineCheckbox3'
 								value='option3'
 							/>
-							<label class='form-check-label' for='inlineCheckbox3'>
+							<label className='form-check-label' htmlFor='inlineCheckbox3'>
 								Brand 5
 							</label>
 						</div>
@@ -106,63 +103,63 @@ const Products = (props) => {
 
 					<div className={classes.filterSection}>
 						<p>By Price</p>
-						<div class='form-check '>
+						<div className='form-check '>
 							<input
-								class='form-check-input'
+								className='form-check-input'
 								type='radio'
 								name='inlineRadioOptions'
 								id='inlineRadio1'
 								value='option1'
 							/>
-							<label class='form-check-label' for='inlineRadio1'>
+							<label className='form-check-label' htmlFor='inlineRadio1'>
 								Upto 1000
 							</label>
 						</div>
-						<div class='form-check '>
+						<div className='form-check '>
 							<input
-								class='form-check-input'
+								className='form-check-input'
 								type='radio'
 								name='inlineRadioOptions'
 								id='inlineRadio1'
 								value='option1'
 							/>
-							<label class='form-check-label' for='inlineRadio1'>
+							<label className='form-check-label' htmlFor='inlineRadio1'>
 								Upto 2000
 							</label>
 						</div>
-						<div class='form-check'>
+						<div className='form-check'>
 							<input
-								class='form-check-input'
+								className='form-check-input'
 								type='radio'
 								name='inlineRadioOptions'
 								id='inlineRadio1'
 								value='option1'
 							/>
-							<label class='form-check-label' for='inlineRadio1'>
+							<label className='form-check-label' htmlFor='inlineRadio1'>
 								Upto 3000
 							</label>
 						</div>
-						<div class='form-check '>
+						<div className='form-check '>
 							<input
-								class='form-check-input'
+								className='form-check-input'
 								type='radio'
 								name='inlineRadioOptions'
 								id='inlineRadio1'
 								value='option1'
 							/>
-							<label class='form-check-label' for='inlineRadio1'>
+							<label className='form-check-label' htmlFor='inlineRadio1'>
 								Upto 4000
 							</label>
 						</div>
-						<div class='form-check'>
+						<div className='form-check'>
 							<input
-								class='form-check-input'
+								className='form-check-input'
 								type='radio'
 								name='inlineRadioOptions'
 								id='inlineRadio1'
 								value='option1'
 							/>
-							<label class='form-check-label' for='inlineRadio1'>
+							<label className='form-check-label' htmlFor='inlineRadio1'>
 								Upto 5000
 							</label>
 						</div>
@@ -171,7 +168,7 @@ const Products = (props) => {
 				<div className={`${classes.content} `}>
 					{props.productList &&
 						props.productList.map((product) => (
-							<div className={`${classes.card} shadow`}>
+							<div key={product._id} className={`${classes.card} shadow`}>
 								<Link to='/product'>
 									<img src={product.url} alt='' className='card-img-top' />
 								</Link>
@@ -179,8 +176,8 @@ const Products = (props) => {
 								<h5 className='text-danger'>&#8377;{product.price}</h5>
 								<button
 									className='btn btn-outline-success'
-									onClick={(productId) => addToCart(productId)}>
-									Add to Cart <i class='fas fa-shopping-cart'></i>
+									onClick={() => addToCart(product._id)}>
+									Add to Cart <i className='fas fa-shopping-cart'></i>
 								</button>
 							</div>
 						))}
