@@ -10,6 +10,7 @@ import { getProductList, postProduct } from '../../actions/productAction';
 import Loading from '../../components/loading/Loading';
 
 const Admin = (props) => {
+	const [update, setUpdate] = useState(false);
 	const [category, setCategory] = useState('');
 	const [photo, setPhoto] = useState('');
 	const [desc, setDesc] = useState('');
@@ -24,14 +25,19 @@ const Admin = (props) => {
 		if (props.productError) {
 			toast.error(props.productError);
 		}
-		if (props.productSuccess) {
+	}, [props.productError]);
+
+	useEffect(() => {
+		if (props.productSuccess && update) {
 			toast.success('Product added successfully');
+			setUpdate(false);
 		}
-	}, [props]);
+	}, [props.productSuccess]);
 
 	const onSubmit = (e) => {
 		e.preventDefault();
 		console.log(photo);
+		setUpdate(true);
 
 		if (photo === '') {
 			toast.error('choose a photo first');
@@ -61,7 +67,6 @@ const Admin = (props) => {
 							id='photo'
 							type='file'
 							className='form-control my-2'
-							// value={photo}
 							onChange={(e) => {
 								setPhoto(e.target.files[0]);
 							}}

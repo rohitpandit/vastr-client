@@ -38,3 +38,31 @@ export const addToOrders = (product) => async (dispatch) => {
 		dispatch({ type: ORDER_POST_FAIL });
 	}
 };
+
+export const incrementOrder = (productId) => async (dispatch) => {
+	try {
+		dispatch({ type: ORDER_INCREMENT_REQUEST });
+
+		const result = await axios.post(
+			`http://localhost:5000/order/increment/${productId}`
+		);
+		dispatch({ type: ORDER_INCREMENT_SUCCESS, payload: result.data.orderList });
+	} catch (error) {
+		console.log(error);
+		dispatch({ type: ORDER_INCREMENT_FAIL });
+	}
+};
+
+export const decrementOrder = (productId) => async (dispatch) => {
+	try {
+		dispatch({ type: ORDER_DECREMENT_REQUEST });
+
+		const result = await axios.post(
+			`http://localhost:5000/order/decrement/${productId}`
+		);
+		dispatch({ type: ORDER_DECREMENT_SUCCESS, payload: result.data.orderList });
+	} catch (error) {
+		console.log(error);
+		dispatch({ type: ORDER_DECREMENT_FAIL });
+	}
+};

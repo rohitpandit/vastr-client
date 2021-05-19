@@ -59,6 +59,14 @@ const Cart = (props) => {
 		return calculateSum() - calculateDiscount() + 100;
 	};
 
+	const increment = () => {
+		console.log('increase');
+	};
+
+	const decrement = () => {
+		console.log('decrease');
+	};
+
 	return (
 		<div className={classes.page}>
 			<Navbar />
@@ -86,8 +94,15 @@ const Cart = (props) => {
 									<p>
 										Quantity:{' '}
 										<h5>
-											<i class='fas fa-plus-square fa-2'></i> {item.quantity}{' '}
-											<i class='fas fa-minus-square fa-2'></i>
+											<i
+												className='fas fa-plus-square fa-2'
+												onClick={increment}
+											/>{' '}
+											{item.quantity}{' '}
+											<i
+												className='fas fa-minus-square fa-2'
+												onClick={decrement}
+											/>
 										</h5>
 									</p>
 									<p>
