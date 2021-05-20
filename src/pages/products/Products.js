@@ -17,6 +17,7 @@ const Products = (props) => {
 
 	useEffect(() => {
 		props.getProductList(type);
+		setPriceRange(100000);
 	}, [props.location]);
 
 	useEffect(() => {
@@ -50,69 +51,10 @@ const Products = (props) => {
 				<div className={`${classes.filter} shadow`}>
 					<h3>Filter</h3>
 					<hr />
-					<div className={classes.filterSection}>
-						<p>By Brands</p>
-						<div className='form-check '>
-							<input
-								className='form-check-input'
-								type='checkbox'
-								id='inlineCheckbox1'
-								value='Brand 1'
-								Checked
-							/>
-							<label className='form-check-label' htmlFor='inlineCheckbox1'>
-								Brand 1
-							</label>
-						</div>
-						<div className='form-check '>
-							<input
-								className='form-check-input'
-								type='checkbox'
-								id='inlineCheckbox2'
-								value='option2'
-							/>
-							<label className='form-check-label' htmlFor='inlineCheckbox2'>
-								Brand 2
-							</label>
-						</div>
-						<div className='form-check'>
-							<input
-								className='form-check-input'
-								type='checkbox'
-								id='inlineCheckbox3'
-								value='option3'
-							/>
-							<label className='form-check-label' htmlFor='inlineCheckbox3'>
-								Brand 3
-							</label>
-						</div>
-						<div className='form-check'>
-							<input
-								className='form-check-input'
-								type='checkbox'
-								id='inlineCheckbox3'
-								value='option3'
-							/>
-							<label className='form-check-label' htmlFor='inlineCheckbox3'>
-								Brand 4
-							</label>
-						</div>
-						<div className='form-check'>
-							<input
-								className='form-check-input'
-								type='checkbox'
-								id='inlineCheckbox3'
-								value='option3'
-							/>
-							<label className='form-check-label' htmlFor='inlineCheckbox3'>
-								Brand 5
-							</label>
-						</div>
-					</div>
-					<hr />
 
 					<div className={classes.filterSection}>
 						<p>By Price</p>
+
 						<div className='form-check '>
 							<input
 								className='form-check-input'
