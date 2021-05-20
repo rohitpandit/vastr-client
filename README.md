@@ -1,1 +1,1 @@
-Project live at https://vastr-client.pages.dev/cart
+Project live at https://vastr-client.pages.dev
