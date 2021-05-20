@@ -10,6 +10,15 @@ import {
 	PRODUCT_POST_FAIL,
 	PRODUCT_POST_REQUEST,
 	PRODUCT_POST_SUCCESS,
+	PRODUCT_DECREMENT_FAIL,
+	PRODUCT_DECREMENT_REQUEST,
+	PRODUCT_DECREMENT_SUCCESS,
+	PRODUCT_DELETE_FAIL,
+	PRODUCT_DELETE_REQUEST,
+	PRODUCT_DELETE_SUCCESS,
+	PRODUCT_INCREMENT_FAIL,
+	PRODUCT_INCREMENT_REQUEST,
+	PRODUCT_INCREMENT_SUCCESS,
 } from '../constants/productConstant';
 
 export const getProduct = (productId) => async (dispatch) => {
@@ -82,3 +91,58 @@ export const getProductList =
 			dispatch({ type: PRODUCTLIST_GET_FAIL, error: error });
 		}
 	};
+
+export const incrementProduct = (productId) => async (dispatch) => {
+	try {
+		dispatch({ type: PRODUCT_INCREMENT_REQUEST });
+
+		const result = await axios.post(
+			`http://localhost:5000/product/increment/${productId}`
+		);
+		console.log(result.data.productList);
+
+		dispatch({
+			type: PRODUCT_INCREMENT_SUCCESS,
+			payload: result.data.productList,
+		});
+	} catch (error) {
+		console.log(error);
+		dispatch({ type: PRODUCT_INCREMENT_FAIL });
+	}
+};
+
+export const decrementProduct = (productId) => async (dispatch) => {
+	try {
+		dispatch({ type: PRODUCT_DECREMENT_REQUEST });
+
+		const result = await axios.post(
+			`http://localhost:5000/product/decrement/${productId}`
+		);
+		console.log(result.data.productList);
+		dispatch({
+			type: PRODUCT_DECREMENT_SUCCESS,
+			payload: result.data.productList,
+		});
+	} catch (error) {
+		console.log(error);
+		dispatch({ type: PRODUCT_DECREMENT_FAIL });
+	}
+};
+
+export const deleteProduct = (productId) => async (dispatch) => {
+	try {
+		dispatch({ type: PRODUCT_DELETE_REQUEST });
+
+		const result = await axios.delete(
+			`http://localhost:5000/product/${productId}`
+		);
+		dispatch({
+			type: PRODUCT_DELETE_SUCCESS,
+			payload: result.data.productList,
+		});
+	} catch (error) {
+		console.log(error);
+
+		dispatch({ type: PRODUCT_DELETE_FAIL });
+	}
+};

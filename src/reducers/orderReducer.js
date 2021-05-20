@@ -66,6 +66,7 @@ const ordereReducer = (state = initialState, action) => {
 				...state,
 				loading: true,
 				success: false,
+				error: null,
 			};
 		case ORDER_DECREMENT_SUCCESS:
 		case ORDER_INCREMENT_SUCCESS:
