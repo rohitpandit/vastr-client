@@ -52,6 +52,8 @@ export const incrementOrder = (productId) => async (dispatch) => {
 		const result = await axios.post(
 			`http://localhost:5000/order/increment/${productId}`
 		);
+		console.log(result.data.orderList);
+
 		dispatch({ type: ORDER_INCREMENT_SUCCESS, payload: result.data.orderList });
 	} catch (error) {
 		console.log(error);
@@ -66,6 +68,7 @@ export const decrementOrder = (productId) => async (dispatch) => {
 		const result = await axios.post(
 			`http://localhost:5000/order/decrement/${productId}`
 		);
+		console.log(result.data.orderList);
 		dispatch({ type: ORDER_DECREMENT_SUCCESS, payload: result.data.orderList });
 	} catch (error) {
 		console.log(error);

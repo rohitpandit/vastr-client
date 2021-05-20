@@ -6,7 +6,11 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Footer from '../../components/footer/Footer';
 import classes from './Cart.module.css';
-import { getOrders } from '../../actions/orderAction';
+import {
+	getOrders,
+	incrementOrder,
+	decrementOrder,
+} from '../../actions/orderAction';
 import { getUser } from '../../actions/userAction';
 
 const Cart = (props) => {
@@ -59,12 +63,24 @@ const Cart = (props) => {
 		return calculateSum() - calculateDiscount() + 100;
 	};
 
-	const increment = () => {
+	const increment = (productId) => {
 		console.log('increase');
+		props.incrementOrder(productId);
 	};
 
-	const decrement = () => {
+	const decrement = (productId, quantity) => {
 		console.log('decrease');
+		console.log(quantity);
+		if (quantity > 1) {
+			props.decrementOrder(productId);
+		} else {
+			toast.info('cannot make the count 0');
+		}
+	};
+
+	const deleteItem = (productId) => {
+		console.log('delete');
+		props.deleteOrder(productId);
 	};
 
 	return (
@@ -91,23 +107,27 @@ const Cart = (props) => {
 								<div className={classes.orderItem} key={item._id}>
 									<img src={item.thumbUrl} alt='' className={classes.image} />
 									<h6>{item.desc}</h6>
-									<p>
+									<div>
 										Quantity:{' '}
 										<h5>
 											<i
 												className='fas fa-plus-square fa-2'
-												onClick={increment}
+												onClick={() => increment(item._id)}
 											/>{' '}
 											{item.quantity}{' '}
 											<i
 												className='fas fa-minus-square fa-2'
-												onClick={decrement}
+												onClick={() => decrement(item._id, item.quantity)}
 											/>
 										</h5>
-									</p>
-									<p>
+									</div>
+									<div>
 										Price: <h5>&#8377;{item.price}</h5>
-									</p>
+									</div>
+									<i
+										class='fas fa-trash-alt text-danger'
+										onClick={() => deleteItem(item._id)}
+									/>
 								</div>
 							))}
 					</div>
@@ -153,6 +173,9 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
 	getOrders: () => dispatch(getOrders()),
 	getUser: () => dispatch(getUser()),
+	incrementOrder: (productId) => dispatch(incrementOrder(productId)),
+	decrementOrder: (productId) => dispatch(decrementOrder(productId)),
+	deleteOrder: (productId) => dispatch(deleteOrder(productId)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Cart);
