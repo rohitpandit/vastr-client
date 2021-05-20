@@ -13,6 +13,7 @@ import { getProductList } from '../../actions/productAction';
 const Products = (props) => {
 	const { type } = useParams();
 	const [update, setUpdate] = useState(false);
+	const [priceRange, setPriceRange] = useState(100000);
 
 	useEffect(() => {
 		props.getProductList(type);
@@ -56,7 +57,8 @@ const Products = (props) => {
 								className='form-check-input'
 								type='checkbox'
 								id='inlineCheckbox1'
-								value='option1'
+								value='Brand 1'
+								Checked
 							/>
 							<label className='form-check-label' htmlFor='inlineCheckbox1'>
 								Brand 1
@@ -117,7 +119,8 @@ const Products = (props) => {
 								type='radio'
 								name='inlineRadioOptions'
 								id='inlineRadio1'
-								value='option1'
+								value={1000}
+								onChange={(e) => setPriceRange(e.target.value)}
 							/>
 							<label className='form-check-label' htmlFor='inlineRadio1'>
 								Upto 1000
@@ -129,7 +132,8 @@ const Products = (props) => {
 								type='radio'
 								name='inlineRadioOptions'
 								id='inlineRadio1'
-								value='option1'
+								value={2000}
+								onChange={(e) => setPriceRange(e.target.value)}
 							/>
 							<label className='form-check-label' htmlFor='inlineRadio1'>
 								Upto 2000
@@ -141,7 +145,8 @@ const Products = (props) => {
 								type='radio'
 								name='inlineRadioOptions'
 								id='inlineRadio1'
-								value='option1'
+								value={3000}
+								onChange={(e) => setPriceRange(e.target.value)}
 							/>
 							<label className='form-check-label' htmlFor='inlineRadio1'>
 								Upto 3000
@@ -153,7 +158,8 @@ const Products = (props) => {
 								type='radio'
 								name='inlineRadioOptions'
 								id='inlineRadio1'
-								value='option1'
+								value={4000}
+								onChange={(e) => setPriceRange(e.target.value)}
 							/>
 							<label className='form-check-label' htmlFor='inlineRadio1'>
 								Upto 4000
@@ -165,7 +171,8 @@ const Products = (props) => {
 								type='radio'
 								name='inlineRadioOptions'
 								id='inlineRadio1'
-								value='option1'
+								value={5000}
+								onChange={(e) => setPriceRange(e.target.value)}
 							/>
 							<label className='form-check-label' htmlFor='inlineRadio1'>
 								Upto 5000
@@ -175,22 +182,30 @@ const Products = (props) => {
 				</div>
 				<div className={`${classes.content} `}>
 					{props.productList &&
-						props.productList.map((product) => (
-							<div key={product._id} className={`${classes.card} shadow`}>
-								<div className={classes.image}>
-									<Link to={`/product/${product._id}`}>
-										<img src={product.url} alt='' className={classes.cardImg} />
-									</Link>
-								</div>
-								<h5 className='m-1'>{product.desc}</h5>
-								<h5 className='text-danger'>&#8377;{product.price}</h5>
-								<button
-									className='btn btn-outline-success'
-									onClick={() => addToCart(product)}>
-									Add to Cart <i className='fas fa-shopping-cart'></i>
-								</button>
-							</div>
-						))}
+						props.productList.map((product) => {
+							if (product.price <= priceRange) {
+								return (
+									<div key={product._id} className={`${classes.card} shadow`}>
+										<div className={classes.image}>
+											<Link to={`/product/${product._id}`}>
+												<img
+													src={product.url}
+													alt=''
+													className={classes.cardImg}
+												/>
+											</Link>
+										</div>
+										<h5 className='m-1'>{product.desc}</h5>
+										<h5 className='text-danger'>&#8377;{product.price}</h5>
+										<button
+											className='btn btn-outline-success'
+											onClick={() => addToCart(product)}>
+											Add to Cart <i className='fas fa-shopping-cart'></i>
+										</button>
+									</div>
+								);
+							}
+						})}
 				</div>
 			</div>
 			<Footer />
