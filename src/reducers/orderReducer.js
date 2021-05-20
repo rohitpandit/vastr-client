@@ -11,6 +11,9 @@ import {
 	ORDER_INCREMENT_FAIL,
 	ORDER_INCREMENT_REQUEST,
 	ORDER_INCREMENT_SUCCESS,
+	ORDER_DELETE_REQUEST,
+	ORDER_DELETE_SUCCESS,
+	ORDER_DELETE_FAIL,
 } from '../constants/orderConstant';
 
 const initialState = {
@@ -58,6 +61,7 @@ const ordereReducer = (state = initialState, action) => {
 			};
 		case ORDER_DECREMENT_REQUEST:
 		case ORDER_INCREMENT_REQUEST:
+		case ORDER_DELETE_REQUEST:
 			return {
 				...state,
 				loading: true,
@@ -65,6 +69,7 @@ const ordereReducer = (state = initialState, action) => {
 			};
 		case ORDER_DECREMENT_SUCCESS:
 		case ORDER_INCREMENT_SUCCESS:
+		case ORDER_DELETE_SUCCESS:
 			return {
 				...state,
 				loading: false,
@@ -73,6 +78,7 @@ const ordereReducer = (state = initialState, action) => {
 			};
 		case ORDER_DECREMENT_FAIL:
 		case ORDER_INCREMENT_FAIL:
+		case ORDER_DELETE_FAIL:
 			return {
 				...state,
 				loading: false,

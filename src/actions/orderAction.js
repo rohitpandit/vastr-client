@@ -12,6 +12,9 @@ import {
 	ORDER_INCREMENT_FAIL,
 	ORDER_INCREMENT_REQUEST,
 	ORDER_INCREMENT_SUCCESS,
+	ORDER_DELETE_REQUEST,
+	ORDER_DELETE_SUCCESS,
+	ORDER_DELETE_FAIL,
 } from '../constants/orderConstant';
 
 export const getOrders = () => async (dispatch) => {
@@ -73,5 +76,20 @@ export const decrementOrder = (productId) => async (dispatch) => {
 	} catch (error) {
 		console.log(error);
 		dispatch({ type: ORDER_DECREMENT_FAIL });
+	}
+};
+
+export const deleteOrder = (productId) => async (dispatch) => {
+	try {
+		dispatch({ type: ORDER_DELETE_REQUEST });
+
+		const result = await axios.delete(
+			`http://localhost:5000/order/${productId}`
+		);
+		dispatch({ type: ORDER_DELETE_SUCCESS, payload: result.data.orderList });
+	} catch (error) {
+		console.log(error);
+
+		dispatch({ type: ORDER_DELETE_FAIL });
 	}
 };

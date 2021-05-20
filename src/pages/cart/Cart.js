@@ -10,6 +10,7 @@ import {
 	getOrders,
 	incrementOrder,
 	decrementOrder,
+	deleteOrder,
 } from '../../actions/orderAction';
 import { getUser } from '../../actions/userAction';
 
@@ -36,6 +37,7 @@ const Cart = (props) => {
 	useEffect(() => {
 		if (props.orderSuccess & update) {
 			toast.success('updated successfully');
+			setUpdate(false);
 		}
 		if (props.orderSuccess) {
 			const s = calculateSum();
@@ -65,11 +67,13 @@ const Cart = (props) => {
 
 	const increment = (productId) => {
 		console.log('increase');
+		setUpdate(true);
 		props.incrementOrder(productId);
 	};
 
 	const decrement = (productId, quantity) => {
 		console.log('decrease');
+		setUpdate(true);
 		console.log(quantity);
 		if (quantity > 1) {
 			props.decrementOrder(productId);
@@ -80,6 +84,7 @@ const Cart = (props) => {
 
 	const deleteItem = (productId) => {
 		console.log('delete');
+		setUpdate(true);
 		props.deleteOrder(productId);
 	};
 
