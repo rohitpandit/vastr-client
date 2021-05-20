@@ -39,7 +39,7 @@ const Product = (props) => {
 	}, [props.orderSuccess]);
 
 	const addToCart = () => {
-		if (!props.roken) {
+		if (!props.token) {
 			toast.error('You need to login in first');
 			return;
 		}
