@@ -7,6 +7,7 @@ import Navbar from '../../components/navbar/Navbar';
 import Footer from '../../components/footer/Footer';
 import classes from './Products.module.css';
 import { addToOrders } from '../../actions/orderAction';
+import Loading from '../../components/loading/Loading';
 import { Link } from 'react-router-dom';
 import { getProductList } from '../../actions/productAction';
 
@@ -46,6 +47,7 @@ const Products = (props) => {
 	return (
 		<div className={classes.page}>
 			<Navbar />
+			{(props.productLoading || props.orderLoading) && <Loading />}
 			<div className={`${classes.main} container`}>
 				<ToastContainer />
 				<div className={`${classes.filter} shadow`}>
