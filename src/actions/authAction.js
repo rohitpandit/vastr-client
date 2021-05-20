@@ -16,7 +16,7 @@ export const login = (userInfo) => async (dispatch) => {
 		dispatch({ type: LOGIN_REQUEST });
 
 		const result = await axios.post(
-			'http://localhost:5000/auth/login',
+			'https://pacific-caverns-28419.herokuapp.com/auth/login',
 			userInfo
 		);
 
@@ -42,7 +42,7 @@ export const signup = (userInfo) => async (dispatch) => {
 		dispatch({ type: SIGNUP_REQUEST });
 
 		const result = await axios.post(
-			'http://localhost:5000/auth/signup',
+			'https://pacific-caverns-28419.herokuapp.com/auth/signup',
 			userInfo
 		);
 

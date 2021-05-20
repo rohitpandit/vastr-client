@@ -13,7 +13,9 @@ export const getUser = () => async (dispatch) => {
 		dispatch({ type: USER_GET_REQUEST });
 
 		//axios request
-		const result = await axios.get('http://localhost:5000/user');
+		const result = await axios.get(
+			'https://pacific-caverns-28419.herokuapp.com/user'
+		);
 
 		dispatch({ type: USER_GET_SUCCESS, payload: result.data.user });
 	} catch (error) {
@@ -27,7 +29,10 @@ export const postUser = (userData) => async (dispatch) => {
 		dispatch({ type: USER_POST_REQUEST });
 
 		//axios request
-		const result = await axios.post('http://localhost:5000/user', userData);
+		const result = await axios.post(
+			'https://pacific-caverns-28419.herokuapp.com/user',
+			userData
+		);
 
 		dispatch({ type: USER_POST_SUCCESS });
 	} catch (error) {

@@ -29,7 +29,7 @@ export const getProduct = (productId) => async (dispatch) => {
 
 		//axios request
 		const result = await axios.get(
-			`http://localhost:5000/product/single/${productId}`
+			`https://pacific-caverns-28419.herokuapp.com/product/single/${productId}`
 		);
 
 		dispatch({ type: PRODUCT_GET_SUCCESS, payload: result.data.product });
@@ -52,7 +52,10 @@ export const postProduct = (productData) => async (dispatch) => {
 		formData.append('price', price);
 		formData.append('category', category);
 
-		const result = await axios.post('http://localhost:5000/product', formData);
+		const result = await axios.post(
+			'https://pacific-caverns-28419.herokuapp.com/product',
+			formData
+		);
 
 		console.log(result);
 
@@ -73,9 +76,13 @@ export const getProductList =
 			let result;
 
 			if (type.length > 0) {
-				result = await axios.get(`http://localhost:5000/product/${type}`);
+				result = await axios.get(
+					`https://pacific-caverns-28419.herokuapp.com/product/${type}`
+				);
 			} else {
-				result = await axios.get(`http://localhost:5000/product`);
+				result = await axios.get(
+					`https://pacific-caverns-28419.herokuapp.com/product`
+				);
 			}
 
 			productList = result.data.productList;
@@ -97,7 +104,7 @@ export const incrementProduct = (productId) => async (dispatch) => {
 		dispatch({ type: PRODUCT_INCREMENT_REQUEST });
 
 		const result = await axios.post(
-			`http://localhost:5000/product/increment/${productId}`
+			`https://pacific-caverns-28419.herokuapp.com/product/increment/${productId}`
 		);
 		console.log(result.data.productList);
 
@@ -116,7 +123,7 @@ export const decrementProduct = (productId) => async (dispatch) => {
 		dispatch({ type: PRODUCT_DECREMENT_REQUEST });
 
 		const result = await axios.post(
-			`http://localhost:5000/product/decrement/${productId}`
+			`https://pacific-caverns-28419.herokuapp.com/product/decrement/${productId}`
 		);
 		console.log(result.data.productList);
 		dispatch({
@@ -134,7 +141,7 @@ export const deleteProduct = (productId) => async (dispatch) => {
 		dispatch({ type: PRODUCT_DELETE_REQUEST });
 
 		const result = await axios.delete(
-			`http://localhost:5000/product/${productId}`
+			`https://pacific-caverns-28419.herokuapp.com/product/${productId}`
 		);
 		dispatch({
 			type: PRODUCT_DELETE_SUCCESS,

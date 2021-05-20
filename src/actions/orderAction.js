@@ -22,7 +22,9 @@ export const getOrders = () => async (dispatch) => {
 		dispatch({ type: ORDER_GET_REQUEST });
 
 		//axios request
-		const result = await axios.get('http://localhost:5000/order');
+		const result = await axios.get(
+			'https://pacific-caverns-28419.herokuapp.com/order'
+		);
 
 		dispatch({ type: ORDER_GET_SUCCESS, payload: result.data.orderList });
 	} catch (error) {
@@ -39,7 +41,10 @@ export const addToOrders = (product) => async (dispatch) => {
 		product.quantity = 1;
 
 		//axios request
-		const result = await axios.post('http://localhost:5000/order', { product });
+		const result = await axios.post(
+			'https://pacific-caverns-28419.herokuapp.com/order',
+			{ product }
+		);
 
 		dispatch({ type: ORDER_POST_SUCCESS, payload: result.data.orderList });
 	} catch (error) {
@@ -53,7 +58,7 @@ export const incrementOrder = (productId) => async (dispatch) => {
 		dispatch({ type: ORDER_INCREMENT_REQUEST });
 
 		const result = await axios.post(
-			`http://localhost:5000/order/increment/${productId}`
+			`https://pacific-caverns-28419.herokuapp.com/order/increment/${productId}`
 		);
 		console.log(result.data.orderList);
 
@@ -69,7 +74,7 @@ export const decrementOrder = (productId) => async (dispatch) => {
 		dispatch({ type: ORDER_DECREMENT_REQUEST });
 
 		const result = await axios.post(
-			`http://localhost:5000/order/decrement/${productId}`
+			`https://pacific-caverns-28419.herokuapp.com/order/decrement/${productId}`
 		);
 		console.log(result.data.orderList);
 		dispatch({ type: ORDER_DECREMENT_SUCCESS, payload: result.data.orderList });
@@ -84,7 +89,7 @@ export const deleteOrder = (productId) => async (dispatch) => {
 		dispatch({ type: ORDER_DELETE_REQUEST });
 
 		const result = await axios.delete(
-			`http://localhost:5000/order/${productId}`
+			`https://pacific-caverns-28419.herokuapp.com/order/${productId}`
 		);
 		dispatch({ type: ORDER_DELETE_SUCCESS, payload: result.data.orderList });
 	} catch (error) {
