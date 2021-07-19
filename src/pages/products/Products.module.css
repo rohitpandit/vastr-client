@@ -1,53 +1,55 @@
 .page {
-	display: flex;
-	flex-direction: column;
-	justify-content: space-between;
-	min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
 .main {
-	display: flex;
-	align-items: flex-start;
+    display: flex;
 }
 
 .filter {
-	padding: 2rem;
-	background-color: white;
-	margin: 1rem 0;
-	width: 15rem;
+    flex: 1;
+    align-self: flex-start;
+    justify-content: start;
+    padding: 2rem;
+    background-color: white;
+    margin: 1rem 0;
+    width: 15rem;
 }
 
 .filterSection {
-	margin: 2rem 0;
+    margin: 2rem 0;
 }
 
 .content {
-	display: flex;
-	flex-wrap: wrap;
+    flex: 4;
+    display: flex;
+    flex-wrap: wrap;
 }
 
 .card {
-	padding: 0.5rem;
-	margin: 1rem;
-	background-color: white;
-	width: 15rem;
-	height: 28rem;
-	overflow: hidden;
-	text-align: center;
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
+    padding: 0.5rem;
+    margin: 1rem;
+    background-color: white;
+    width: 15rem;
+    height: 28rem;
+    overflow: hidden;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .image {
-	height: 18rem;
-	width: 13rem;
+    height: 18rem;
+    width: 13rem;
 }
 
 .cardImg {
-	height: 18rem;
-	width: 13rem;
-	object-fit: cover;
-	overflow: hidden;
+    height: 18rem;
+    width: 13rem;
+    object-fit: cover;
+    overflow: hidden;
 }
