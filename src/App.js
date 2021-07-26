@@ -17,7 +17,6 @@ import Admin from './pages/admin/Admin';
 import './bootstrap.min.css';
 import './App.css';
 import Products from './pages/products/Products';
-import Payment from './pages/payment/Payment';
 
 function App(props) {
     axios.defaults.headers.common['Authorization'] = `Bearer ${props.token}`;
@@ -40,7 +39,6 @@ function App(props) {
                     <Route exact path='/products/:type' component={Products} />
                     <Route exact path='/about' component={AboutUs} />
                     <Route exact path='/contact' component={ContactUs} />
-                    <Route exact path='/payment' component={Payment} />
                     <Route path='*' component={PageNotFound} />
                 </Switch>
             </Router>

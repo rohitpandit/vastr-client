@@ -11,6 +11,7 @@ import {
     incrementOrder,
     decrementOrder,
     deleteOrder,
+    paymentSuccess,
 } from '../../actions/orderAction';
 import { loadStripe } from '@stripe/stripe-js';
 
@@ -98,11 +99,13 @@ const Cart = (props) => {
     };
 
     const paymentSuccessHandler = () => {
-        toast.success(`Order placed with ${total}`);
+        toast.success(`Order placed with ${total} Rupees`);
+        props.paymentSuccess();
+        props.getOrders();
     };
 
-    const paymentFailureHandler = () => {
-        toast.danger('Payment failed!');
+    const paymentFailureHandler = (data) => {
+        toast.error('payment error');
     };
 
     return (
@@ -120,7 +123,7 @@ const Cart = (props) => {
                         </h5>
                         <hr />
                         <p>
-                            {props.user
+                            {props.user && props.user.address
                                 ? props.user.address
                                 : 'Set your address'}
                         </p>
@@ -128,85 +131,97 @@ const Cart = (props) => {
                     <div className={`${classes.orders} shadow`}>
                         <h5>Your Orders:</h5>
                         <hr />
-                        {props.orders &&
-                            props.orders.map((item) => (
-                                <div
-                                    className={classes.orderItem}
-                                    key={item._id}>
-                                    <img
-                                        src={item.thumbUrl}
-                                        alt=''
-                                        className={classes.image}
-                                    />
-                                    <h6>{item.desc}</h6>
-                                    <div>
-                                        Quantity:{' '}
-                                        <h5>
-                                            <i
-                                                className='fas fa-plus-square fa-2'
-                                                onClick={() =>
-                                                    increment(item._id)
-                                                }
-                                            />{' '}
-                                            {item.quantity}{' '}
-                                            <i
-                                                className='fas fa-minus-square fa-2'
-                                                onClick={() =>
-                                                    decrement(
-                                                        item._id,
-                                                        item.quantity
-                                                    )
-                                                }
-                                            />
-                                        </h5>
-                                    </div>
-                                    <div>
-                                        Price: <h5>&#8377;{item.price}</h5>
-                                    </div>
-                                    <i
-                                        class='fas fa-trash-alt text-danger'
-                                        onClick={() => deleteItem(item._id)}
-                                    />
-                                </div>
-                            ))}
+                        {props.orders && props.orders.length > 0
+                            ? props.orders.map((item) => (
+                                  <div
+                                      className={classes.orderItem}
+                                      key={item._id}>
+                                      <img
+                                          src={item.thumbUrl}
+                                          alt=''
+                                          className={classes.image}
+                                      />
+                                      <h6>{item.desc}</h6>
+                                      <div>
+                                          Quantity:{' '}
+                                          <h5>
+                                              <i
+                                                  className='fas fa-plus-square fa-2'
+                                                  onClick={() =>
+                                                      increment(item._id)
+                                                  }
+                                              />{' '}
+                                              {item.quantity}{' '}
+                                              <i
+                                                  className='fas fa-minus-square fa-2'
+                                                  onClick={() =>
+                                                      decrement(
+                                                          item._id,
+                                                          item.quantity
+                                                      )
+                                                  }
+                                              />
+                                          </h5>
+                                      </div>
+                                      <div>
+                                          Price: <h5>&#8377;{item.price}</h5>
+                                      </div>
+                                      <i
+                                          class='fas fa-trash-alt text-danger'
+                                          onClick={() => deleteItem(item._id)}
+                                      />
+                                  </div>
+                              ))
+                            : props.orderLoading && (
+                                  <p>
+                                      You don't have any orders in your cart
+                                      yet.
+                                  </p>
+                              )}
                     </div>
                 </div>
                 <div className={`${classes.amount} shadow`}>
                     <h5>Total</h5>
                     <hr />
-                    <div className='d-flex align-items-center justify-content-around'>
-                        <h6>Item Price:</h6> <h4>&#8377;{sum}</h4>
-                    </div>
-                    <div className='d-flex align-items-center justify-content-around'>
-                        <h6>Shipping Price:</h6> <h4>&#8377;100</h4>
-                    </div>
-                    <div className='d-flex align-items-center justify-content-around'>
-                        <h6>Discount 10%:</h6> <h4>&#8377;{discount}</h4>
-                    </div>
-                    <hr />
-                    <div className='d-flex align-items-center justify-content-around'>
-                        <h6 className='text-danger'>Net Payable:</h6>{' '}
-                        <h4 className='text-danger'>&#8377;{total}</h4>
-                    </div>
-                    <button
-                        className='btn btn-outline-primary'
-                        onClick={() => setShowPayment(true)}>
-                        Proceed to Pay
-                    </button>
-                    {showPayment && (
-                        <div>
-                            <Elements stripe={stripe}>
-                                <CheckoutForm
-                                    total={total}
-                                    paymentFailureHandler={
-                                        paymentFailureHandler
-                                    }
-                                    paymentSuccessHandler={
-                                        paymentSuccessHandler
-                                    }
-                                />
-                            </Elements>
-                        </div>
+                    {props.orders && props.orders.length > 0 && (
+                        <>
+                            <div className='d-flex align-items-center justify-content-around'>
+                                <h6>Item Price:</h6> <h4>&#8377;{sum}</h4>
+                            </div>
+                            <div className='d-flex align-items-center justify-content-around'>
+                                <h6>Shipping Price:</h6> <h4>&#8377;100</h4>
+                            </div>
+                            <div className='d-flex align-items-center justify-content-around'>
+                                <h6>Discount 10%:</h6>{' '}
+                                <h4>&#8377;{discount}</h4>
+                            </div>
+                            <hr />
+                            <div className='d-flex align-items-center justify-content-around'>
+                                <h6 className='text-danger'>Net Payable:</h6>{' '}
+                                <h4 className='text-danger'>&#8377;{total}</h4>
+                            </div>
+                            <button
+                                className='btn btn-outline-primary'
+                                onClick={() => setShowPayment(true)}
+                                disabled={!props.user || !props.user.address}>
+                                Proceed to Pay
+                            </button>
+                            {showPayment && (
+                                <div>
+                                    <Elements stripe={stripe}>
+                                        <CheckoutForm
+                                            total={total}
+                                            paymentFailureHandler={
+                                                paymentFailureHandler
+                                            }
+                                            paymentSuccessHandler={
+                                                paymentSuccessHandler
+                                            }
+                                        />
+                                    </Elements>
+                                </div>
+                            )}
+                        </>
                     )}
                 </div>
             </div>
@@ -232,6 +247,7 @@ const mapDispatchToProps = (dispatch) => ({
     incrementOrder: (productId) => dispatch(incrementOrder(productId)),
     decrementOrder: (productId) => dispatch(decrementOrder(productId)),
     deleteOrder: (productId) => dispatch(deleteOrder(productId)),
+    paymentSuccess: () => dispatch(paymentSuccess()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Cart);
