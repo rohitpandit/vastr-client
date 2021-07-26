@@ -17,33 +17,39 @@ import Admin from './pages/admin/Admin';
 import './bootstrap.min.css';
 import './App.css';
 import Products from './pages/products/Products';
+import Payment from './pages/payment/Payment';
 
 function App(props) {
-	axios.defaults.headers.common['Authorization'] = `Bearer ${props.token}`;
+    axios.defaults.headers.common['Authorization'] = `Bearer ${props.token}`;
 
-	return (
-		<div className='App'>
-			<Router>
-				<Switch>
-					<Route exact path='/' component={Home} />
-					<Route exact path='/login' component={Login} />
-					<Route exact path='/signup' component={Signup} />
-					<ProtectedRoute exact path='/profile' component={Profile} />
-					<ProtectedRoute exact path='/cart' component={Cart} />
-					<AdminProtectedRoute exact path='/admin' component={Admin} />
-					<Route exact path='/product/:id' component={Product} />
-					<Route exact path='/products/:type' component={Products} />
-					<Route exact path='/about' component={AboutUs} />
-					<Route exact path='/contact' component={ContactUs} />
-					<Route path='*' component={PageNotFound} />
-				</Switch>
-			</Router>
-		</div>
-	);
+    return (
+        <div className='App'>
+            <Router>
+                <Switch>
+                    <Route exact path='/' component={Home} />
+                    <Route exact path='/login' component={Login} />
+                    <Route exact path='/signup' component={Signup} />
+                    <ProtectedRoute exact path='/profile' component={Profile} />
+                    <ProtectedRoute exact path='/cart' component={Cart} />
+                    <AdminProtectedRoute
+                        exact
+                        path='/admin'
+                        component={Admin}
+                    />
+                    <Route exact path='/product/:id' component={Product} />
+                    <Route exact path='/products/:type' component={Products} />
+                    <Route exact path='/about' component={AboutUs} />
+                    <Route exact path='/contact' component={ContactUs} />
+                    <Route exact path='/payment' component={Payment} />
+                    <Route path='*' component={PageNotFound} />
+                </Switch>
+            </Router>
+        </div>
+    );
 }
 
 const mapStateToProps = (state) => ({
-	token: state.auth.token,
+    token: state.auth.token,
 });
 
 export default connect(mapStateToProps)(App);
