@@ -85,7 +85,7 @@ const CheckoutForm = ({
                     type='submit'
                     onClick={handleSumit}
                     className='btn btn-primary mt-2'>
-                    {processing ? 'processing...' : `Pay 550`}
+                    {processing ? 'processing...' : `Pay ${total}`}
                 </button>
             </form>
         </div>
