@@ -1,42 +1,40 @@
-import axios from 'axios';
+import axios from 'axios'
 import {
-	USER_GET_FAIL,
-	USER_GET_REQUEST,
-	USER_GET_SUCCESS,
-	USER_POST_FAIL,
-	USER_POST_REQUEST,
-	USER_POST_SUCCESS,
-} from '../constants/userConstant';
+  USER_GET_FAIL,
+  USER_GET_REQUEST,
+  USER_GET_SUCCESS,
+  USER_POST_FAIL,
+  USER_POST_REQUEST,
+  USER_POST_SUCCESS,
+} from '../constants/userConstant'
 
 export const getUser = () => async (dispatch) => {
-	try {
-		dispatch({ type: USER_GET_REQUEST });
+  try {
+    dispatch({ type: USER_GET_REQUEST })
 
-		//axios request
-		const result = await axios.get(
-			'https://pacific-caverns-28419.herokuapp.com/user'
-		);
+    //axios request
+    const result = await axios.get('https://vastr.herokuapp.com/user')
 
-		dispatch({ type: USER_GET_SUCCESS, payload: result.data.user });
-	} catch (error) {
-		console.log(error);
-		dispatch({ type: USER_GET_FAIL });
-	}
-};
+    dispatch({ type: USER_GET_SUCCESS, payload: result.data.user })
+  } catch (error) {
+    console.log(error)
+    dispatch({ type: USER_GET_FAIL })
+  }
+}
 
 export const postUser = (userData) => async (dispatch) => {
-	try {
-		dispatch({ type: USER_POST_REQUEST });
+  try {
+    dispatch({ type: USER_POST_REQUEST })
 
-		//axios request
-		const result = await axios.post(
-			'https://pacific-caverns-28419.herokuapp.com/user',
-			userData
-		);
+    //axios request
+    const result = await axios.post(
+      'https://vastr.herokuapp.com/user',
+      userData,
+    )
 
-		dispatch({ type: USER_POST_SUCCESS });
-	} catch (error) {
-		console.log(error);
-		dispatch({ type: USER_POST_FAIL, error: error });
-	}
-};
+    dispatch({ type: USER_POST_SUCCESS })
+  } catch (error) {
+    console.log(error)
+    dispatch({ type: USER_POST_FAIL, error: error })
+  }
+}
