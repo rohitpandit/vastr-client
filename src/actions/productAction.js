@@ -29,7 +29,7 @@ export const getProduct = (productId) => async (dispatch) => {
 
     //axios request
     const result = await axios.get(
-      `https://vastr.herokuapp.com/product/single/${productId}`,
+      `http://54.86.77.137:5001/product/single/${productId}`,
     )
 
     dispatch({ type: PRODUCT_GET_SUCCESS, payload: result.data.product })
@@ -53,7 +53,7 @@ export const postProduct = (productData) => async (dispatch) => {
     formData.append('category', category)
 
     const result = await axios.post(
-      'https://vastr.herokuapp.com/product',
+      'http://54.86.77.137:5001/product',
       formData,
     )
 
@@ -74,9 +74,9 @@ export const getProductList = (type = '') => async (dispatch) => {
     let result
 
     if (type.length > 0) {
-      result = await axios.get(`https://vastr.herokuapp.com/product/${type}`)
+      result = await axios.get(`http://54.86.77.137:5001/product/${type}`)
     } else {
-      result = await axios.get(`https://vastr.herokuapp.com/product`)
+      result = await axios.get(`http://54.86.77.137:5001/product`)
     }
 
     productList = result.data.productList
@@ -98,7 +98,7 @@ export const incrementProduct = (productId) => async (dispatch) => {
     dispatch({ type: PRODUCT_INCREMENT_REQUEST })
 
     const result = await axios.post(
-      `https://vastr.herokuapp.com/product/increment/${productId}`,
+      `http://54.86.77.137:5001/product/increment/${productId}`,
     )
     console.log(result.data.productList)
 
@@ -117,7 +117,7 @@ export const decrementProduct = (productId) => async (dispatch) => {
     dispatch({ type: PRODUCT_DECREMENT_REQUEST })
 
     const result = await axios.post(
-      `https://vastr.herokuapp.com/product/decrement/${productId}`,
+      `http://54.86.77.137:5001/product/decrement/${productId}`,
     )
     console.log(result.data.productList)
     dispatch({
@@ -135,7 +135,7 @@ export const deleteProduct = (productId) => async (dispatch) => {
     dispatch({ type: PRODUCT_DELETE_REQUEST })
 
     const result = await axios.delete(
-      `https://vastr.herokuapp.com/product/${productId}`,
+      `http://54.86.77.137:5001/product/${productId}`,
     )
     dispatch({
       type: PRODUCT_DELETE_SUCCESS,

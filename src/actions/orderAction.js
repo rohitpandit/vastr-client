@@ -23,7 +23,7 @@ export const getOrders = () => async (dispatch) => {
     dispatch({ type: ORDER_GET_REQUEST })
 
     //axios request
-    const result = await axios.get('https://vastr.herokuapp.com/order')
+    const result = await axios.get('http://54.86.77.137:5001/order')
 
     dispatch({ type: ORDER_GET_SUCCESS, payload: result.data.orderList })
   } catch (error) {
@@ -40,7 +40,7 @@ export const addToOrders = (product) => async (dispatch) => {
     product.quantity = 1
 
     //axios request
-    const result = await axios.post('https://vastr.herokuapp.com/order', {
+    const result = await axios.post('http://54.86.77.137:5001/order', {
       product,
     })
 
@@ -56,7 +56,7 @@ export const incrementOrder = (productId) => async (dispatch) => {
     dispatch({ type: ORDER_INCREMENT_REQUEST })
 
     const result = await axios.post(
-      `https://vastr.herokuapp.com/order/increment/${productId}`,
+      `http://54.86.77.137:5001/order/increment/${productId}`,
     )
     console.log(result.data.orderList)
 
@@ -75,7 +75,7 @@ export const decrementOrder = (productId) => async (dispatch) => {
     dispatch({ type: ORDER_DECREMENT_REQUEST })
 
     const result = await axios.post(
-      `https://vastr.herokuapp.com/order/decrement/${productId}`,
+      `http://54.86.77.137:5001/order/decrement/${productId}`,
     )
     console.log(result.data.orderList)
     dispatch({
@@ -93,7 +93,7 @@ export const deleteOrder = (productId) => async (dispatch) => {
     dispatch({ type: ORDER_DELETE_REQUEST })
 
     const result = await axios.delete(
-      `https://vastr.herokuapp.com/order/${productId}`,
+      `http://54.86.77.137:5001/order/${productId}`,
     )
     dispatch({
       type: ORDER_DELETE_SUCCESS,
@@ -108,7 +108,7 @@ export const deleteOrder = (productId) => async (dispatch) => {
 
 export const paymentSuccess = () => async (dispatch) => {
   try {
-    await axios.patch(`https://vastr.herokuapp.com/order/paymentSuccess`)
+    await axios.patch(`http://54.86.77.137:5001/order/paymentSuccess`)
     dispatch({ type: PAYMENT_SUCCESSFUL })
   } catch (error) {
     console.log(error)

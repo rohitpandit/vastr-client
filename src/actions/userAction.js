@@ -13,7 +13,7 @@ export const getUser = () => async (dispatch) => {
     dispatch({ type: USER_GET_REQUEST })
 
     //axios request
-    const result = await axios.get('https://vastr.herokuapp.com/user')
+    const result = await axios.get('http://54.86.77.137:5001/user')
 
     dispatch({ type: USER_GET_SUCCESS, payload: result.data.user })
   } catch (error) {
@@ -28,7 +28,7 @@ export const postUser = (userData) => async (dispatch) => {
 
     //axios request
     const result = await axios.post(
-      'https://vastr.herokuapp.com/user',
+      'http://54.86.77.137:5001/user',
       userData,
     )
 

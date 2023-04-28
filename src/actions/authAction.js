@@ -16,7 +16,7 @@ export const login = (userInfo) => async (dispatch) => {
     dispatch({ type: LOGIN_REQUEST })
 
     const result = await axios.post(
-      'https://vastr.herokuapp.com/auth/login',
+      'http://54.86.77.137:5001/auth/login',
       userInfo,
     )
 
@@ -42,7 +42,7 @@ export const signup = (userInfo) => async (dispatch) => {
     dispatch({ type: SIGNUP_REQUEST })
 
     const result = await axios.post(
-      'https://vastr.herokuapp.com/auth/signup',
+      'http://54.86.77.137:5001/auth/signup',
       userInfo,
     )
 
